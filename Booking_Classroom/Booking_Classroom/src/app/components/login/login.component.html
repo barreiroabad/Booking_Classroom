@@ -1,57 +1,44 @@
-<!--
-  <div fxLayout="column" fxLayoutAlign="start stretch" fxFlex="50" class="body">
-       <img src="./assets/img/logo.svg" />
+<div fxLayout="row" fxLayoutAlign="start stretch" fxFill>
+
+  <!-- Columna izquierda -->
+  <div
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    style="background-color: #494592"
+    fxFlex="65"
+  >
+    <img src="./assets/img/logo.svg" />
   </div>
 
-  <div fxLayout="column" fxLayoutAlign="center stretch" fxFlex="50">
-    <div fxLayout="column" fxLayoutAlign="center center">
-      <div>
-        <h1 class="login">Login</h1>
-      </div>
-      <div>
-        <mat-form-field class="ancho">
-          <mat-label>Usuario</mat-label>
-          <input matInput />
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field class="ancho">
-          <mat-label>Contraseña</mat-label>
-          <input matInput />
-        </mat-form-field>
-      </div>
-      <br />
-      <div>
-        <button mat-raised-button color="warn">Ingresar</button>
-      </div>
+  <!-- Columna derecha -->
+
+  <div
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    style="background-color: burlywood"
+    fxFlex="auto"
+  >
+    <div>
+      <h1 class="login">Login</h1>
     </div>
-  </div> -->
-
-  <div fxLayout="row" fxLayoutAlign="start stretch" fxFill>
-
-    <div style="background-color: #494592;" fxFlex="65">
-      <img src="./assets/img/logo.svg" />
+    <div>
+      <mat-form-field>
+        <mat-label>Usuario</mat-label>
+        <input matInput />
+      </mat-form-field>
     </div>
-
-    <div fxLayout="column" fxLayoutAlign="center center" style="background-color: burlywood;" fxFlex="35">
-        <div>
-          <h1 class="login">Login</h1>
-        </div>
-        <div>
-          <mat-form-field>
-            <mat-label>Usuario</mat-label>
-            <input matInput />
-          </mat-form-field>
-        </div>
-        <div>
-          <mat-form-field>
-            <mat-label>Contraseña</mat-label>
-            <input matInput />
-          </mat-form-field>
-        </div>
-        <br />
-        <div>
-          <button mat-raised-button style="background-color: #494592; color: white;">Ingresar</button>
-        </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Contraseña</mat-label>
+        <input matInput />
+      </mat-form-field>
+    </div>
+    <br />
+    <div>
+      <button mat-raised-button style="background-color: #494592; color: white">
+        Ingresar
+      </button>
     </div>
   </div>
+
+</div>
