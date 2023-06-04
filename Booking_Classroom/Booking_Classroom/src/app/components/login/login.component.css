@@ -1,0 +1,10 @@
+img {
+  width: 100%;
+  display: block;
+}
+
+.login {
+  color: #494592;
+  font-weight: bold;
+  font-size: 20pt;
+}
