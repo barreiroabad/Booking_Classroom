@@ -1,5 +1,4 @@
 <div fxLayout="row" fxLayoutAlign="start stretch" fxFill>
-
   <!-- Columna izquierda -->
   <div
     fxLayout="column"
@@ -18,27 +17,49 @@
     style="background-color: burlywood"
     fxFlex="auto"
   >
-    <div>
-      <h1 class="login">Login</h1>
-    </div>
-    <div>
-      <mat-form-field>
-        <mat-label>Usuario</mat-label>
-        <input matInput />
-      </mat-form-field>
-    </div>
-    <div>
-      <mat-form-field>
-        <mat-label>Contraseña</mat-label>
-        <input matInput />
-      </mat-form-field>
-    </div>
-    <br />
-    <div>
-      <button mat-raised-button style="background-color: #494592; color: white">
-        Ingresar
-      </button>
-    </div>
-  </div>
+    <div fxLayout="row" fxLayoutAlign="space-around stretch" >
+      <div>
+        <h1 class="login">Login</h1>
+      </div>
+      <div>
+        <mat-icon class="login">login</mat-icon>
+      </div>
 
+    </div>
+    <form [formGroup]="form" (ngSubmit)="onEntrar()">
+      <div>
+        <mat-form-field>
+          <mat-label>Usuario</mat-label>
+          <input matInput formControlName="usuario" />
+          <mat-error *ngIf="form.controls['usuario'].hasError('required')">{{
+            getErrorMessage()
+          }}</mat-error>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <mat-label>Contraseña</mat-label>
+          <input matInput formControlName="password" type="password" />
+          <mat-error *ngIf="form.controls['password'].hasError('required')">{{
+            getErrorMessage()
+          }}</mat-error>
+        </mat-form-field>
+      </div>
+      <br />
+      <!-- Botón -->
+      <div fxLayout="column" fxLayoutAlign="center center">
+        <button
+          mat-raised-button
+          [disabled]="form.invalid"
+          [ngStyle]="{
+            'background-color': form.invalid ? 'rgb(183, 183, 183)' : '#494592',
+            'color': form.invalid ? '#d4d4d4' : '#FFFFFF'
+          }"
+          type="submit"
+        >
+          Entrar
+        </button>
+      </div>
+    </form>
+  </div>
 </div>

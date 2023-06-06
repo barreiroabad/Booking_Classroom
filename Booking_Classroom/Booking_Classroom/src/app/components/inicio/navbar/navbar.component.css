@@ -1,0 +1,20 @@
+.barra {
+  background-color: #494592;
+  color: burlywood;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.botones {
+  background-color: burlywood;
+  margin-right: 3%;
+  font-size: 75%;
+  width: 15%;
+  height: 60%;
+}
+
+.titulo {
+  font-size: 150%;
+}

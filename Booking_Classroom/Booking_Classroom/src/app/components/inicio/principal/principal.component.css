@@ -1,0 +1,27 @@
+
+.botones {
+  font-size: 20px;
+  width: 90%;
+  height: 20%;
+  background-color: burlywood;
+}
+
+.botones2 {
+  font-size: 20px;
+  width: 90%;
+  height: 20%;
+  background-color: #494592;
+}
+
+.contenedor {
+  width: 500px;
+  height: 300px;
+  border-color: #494592;
+  border-radius: 3%;
+  border-width: 4px;
+  border-style: dashed;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

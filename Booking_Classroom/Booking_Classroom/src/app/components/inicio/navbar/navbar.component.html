@@ -1,0 +1,10 @@
+<mat-toolbar class="barra">
+  <span *ngIf="inicio" class="titulo">Booking Classroom</span>
+  <button *ngIf="!inicio" mat-button style="color: #494592;" class="botones">Mis Reservas</button>
+  <button *ngIf="!inicio" mat-button style="color: #494592;" class="botones">Reservar Clase</button>
+  <span class="example-spacer"></span>
+  <button mat-button style="color: #494592;" class="botones">Usuarios</button>
+  <button mat-icon-button>
+    <mat-icon>logout</mat-icon>
+  </button>
+</mat-toolbar>
