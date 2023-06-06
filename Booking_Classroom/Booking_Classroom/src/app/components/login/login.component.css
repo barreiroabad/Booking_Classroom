@@ -9,3 +9,17 @@ img {
   font-size: 20pt;
 }
 
+a {
+  color: #494592; /* Color inicial del enlace */
+  text-decoration: none; /* Evita la subrayado del enlace */
+}
+
+a:visited {
+  color: #494592; /* Color del enlace visitado */
+}
+
+a:hover,
+a:focus,
+a:active {
+  color: #494592; /* Color del enlace al pasar el cursor, al tener el foco o al hacer clic */
+}

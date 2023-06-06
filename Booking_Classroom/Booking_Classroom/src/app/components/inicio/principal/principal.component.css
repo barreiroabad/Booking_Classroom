@@ -25,3 +25,11 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+.botones:hover {
+  background-color: rgb(246, 159, 19);
+}
+
+.botones2:hover {
+  background-color: rgb(127, 95, 246);
+}

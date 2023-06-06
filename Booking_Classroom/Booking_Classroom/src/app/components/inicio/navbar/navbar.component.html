@@ -1,10 +1,44 @@
 <mat-toolbar class="barra">
-  <span *ngIf="inicio" class="titulo">Booking Classroom</span>
-  <button *ngIf="!inicio" mat-button style="color: #494592;" class="botones">Mis Reservas</button>
-  <button *ngIf="!inicio" mat-button style="color: #494592;" class="botones">Reservar Clase</button>
+
+  <button
+    routerLink="/inicio/principal"
+    routerLinkActive="active2"
+    mat-icon-button
+    class="boton-pequeño"
+    style="margin-right: 2%;"
+  >
+    <mat-icon>home</mat-icon>
+  </button>
+
+  <button
+    routerLink="/inicio/mis-reservas"
+    routerLinkActive="active"
+    mat-button
+    style="color: #494592"
+    class="botones"
+  >
+    Mis Reservas
+  </button>
+  <button
+    routerLink="/inicio/reservar-clase"
+    routerLinkActive="active"
+    mat-button
+    style="color: #494592"
+    class="botones"
+  >
+    Reservar Clase
+  </button>
   <span class="example-spacer"></span>
-  <button mat-button style="color: #494592;" class="botones">Usuarios</button>
-  <button mat-icon-button>
+  <button
+    routerLink="/inicio/usuarios/configuracion"
+    routerLinkActive="active"
+    mat-button
+    style="color: #494592"
+    class="botones"
+  >
+    Usuarios
+  </button>
+  <button routerLink="/login" mat-icon-button class="boton-pequeño">
     <mat-icon>logout</mat-icon>
   </button>
 </mat-toolbar>

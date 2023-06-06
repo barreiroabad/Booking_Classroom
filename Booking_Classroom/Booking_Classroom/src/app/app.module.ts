@@ -8,11 +8,12 @@ import { SharedModule } from './components/shared/shared.module';
 
 //Componentes
 import { LoginComponent } from './components/login/login.component';
+import { CrearUsuarioComponent } from './components/inicio/usuarios/crear-usuario/crear-usuario.component';
 
 
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent],
+  declarations: [AppComponent, LoginComponent, CrearUsuarioComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

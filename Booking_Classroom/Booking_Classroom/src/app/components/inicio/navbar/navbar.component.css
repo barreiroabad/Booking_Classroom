@@ -18,3 +18,33 @@
 .titulo {
   font-size: 150%;
 }
+
+.botones:hover {
+  background-color: rgb(246, 159, 19);
+}
+
+.boton-pequeño:hover {
+  background-color: rgb(127, 95, 246);
+}
+
+.active {
+  background-color: yellow;
+  color: black;
+  font-weight: bold;
+  transition: background-color 2s;
+}
+
+.active2 {
+  color: black;
+  font-weight: bold;
+  transition: background-color 2s;
+  animation-name: cambio-color;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes cambio-color {
+  0% { background-color: burlywood; }
+  50% { background-color: yellow; }
+  100% { background-color: burlywood; }
+}

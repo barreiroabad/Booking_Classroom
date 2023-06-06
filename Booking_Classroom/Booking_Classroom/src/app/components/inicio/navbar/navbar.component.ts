@@ -6,9 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
-  public inicio: boolean;
 
-  constructor() {
-    this.inicio = false;
-  }
+  constructor() {}
 }
