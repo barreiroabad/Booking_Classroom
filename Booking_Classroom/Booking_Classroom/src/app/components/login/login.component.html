@@ -28,7 +28,7 @@
 
     <form [formGroup]="form" (ngSubmit)="onEntrar()">
       <div>
-        <mat-form-field>
+        <mat-form-field style="width: 100%;">
           <mat-label>Usuario</mat-label>
           <input matInput formControlName="usuario" />
           <mat-error *ngIf="form.controls['usuario'].hasError('required')">{{
@@ -37,9 +37,23 @@
         </mat-form-field>
       </div>
       <div>
-        <mat-form-field>
+        <mat-form-field style="width: 100%;">
           <mat-label>Contraseña</mat-label>
-          <input matInput formControlName="password" type="password" />
+          <input
+            matInput
+            formControlName="password"
+            [type]="hide ? 'password' : 'text'"
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="hide = !hide"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide"
+            type="button"
+          >
+            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
           <mat-error *ngIf="form.controls['password'].hasError('required')">{{
             getErrorMessage()
           }}</mat-error>
@@ -63,10 +77,18 @@
 
       <!-- Registro -->
       <div fxLayout="column" fxLayoutAlign="center center">
-        <br>
-        <a routerLink="../inicio/usuarios/crear-usuario" style="font-size: 12px; font-weight: bold;"
-          >Crear una cuenta.</a
-        >
+        <br />
+        <p style="font-size: 12px; color: rgb(88, 88, 88)">
+          ¿No tines cuenta?
+          <span
+            ><a
+              (click)="cambiarValor()"
+              style="font-weight: bold"
+              routerLink="../inicio/usuarios/crear-usuario"
+              >Regístrate</a
+            ></span
+          >
+        </p>
       </div>
     </form>
   </div>

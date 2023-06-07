@@ -1,11 +1,10 @@
-<mat-toolbar class="barra">
-
+<mat-toolbar *ngIf="mostrarNavBar" class="barra">
   <button
     routerLink="/inicio/principal"
     routerLinkActive="active2"
     mat-icon-button
     class="boton-pequeño"
-    style="margin-right: 2%;"
+    style="margin-right: 2%"
   >
     <mat-icon>home</mat-icon>
   </button>
@@ -39,6 +38,10 @@
     Usuarios
   </button>
   <button routerLink="/login" mat-icon-button class="boton-pequeño">
-    <mat-icon>logout</mat-icon>
+    <mat-icon
+      ><span class="material-symbols-outlined">
+        power_settings_new
+      </span></mat-icon
+    >
   </button>
 </mat-toolbar>

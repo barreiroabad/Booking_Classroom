@@ -12,13 +12,14 @@ import { CrearUsuarioComponent } from './components/inicio/usuarios/crear-usuari
 
 
 
+
 @NgModule({
   declarations: [AppComponent, LoginComponent, CrearUsuarioComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    SharedModule
+    SharedModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

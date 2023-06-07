@@ -1,1 +1,170 @@
-<p>crear-clase works!</p>
+<div fxLayout="row" fxLayoutAlign="start stretch" fxFill>
+  <!-- Columna izquierda -->
+  <div
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    style="background-color: #494592"
+    fxFlex="35"
+  >
+    <img src="./assets/img/logo.svg" />
+  </div>
+
+  <!-- Columna derecha -->
+  <div
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    style="background-color: burlywood"
+    fxFlex="auto"
+  >
+    <div>
+      <div>
+        <h1 class="registro">Crear nueva clase</h1>
+      </div>
+    </div>
+
+    <div fxLayout="column" fxLayoutAlign="center center" style="width: 100%">
+      <form [formGroup]="form" (ngSubmit)="onEntrar()" style="width: 60%">
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <div>
+            <mat-form-field style="width: 100%">
+              <mat-label>Aula</mat-label>
+              <input matInput formControlName="aula" />
+              <mat-error *ngIf="form.controls['aula'].hasError('required')">{{
+                getErrorMessage()
+              }}</mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field style="width: 100%">
+              <mat-label>Aforo</mat-label>
+              <input matInput formControlName="aforo" type="number" />
+              <mat-error *ngIf="form.controls['aforo'].hasError('required')">{{
+                getErrorMessage()
+              }}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <div>
+            <mat-form-field style="width: 100%">
+              <mat-label>Selecciona la hora de inicio</mat-label>
+              <mat-select [(value)]="selected1" formControlName="hora_inicial">
+                <mat-option>None</mat-option>
+                <mat-option value="option1">Option 1</mat-option>
+                <mat-option value="option2">Option 2</mat-option>
+                <mat-option value="option3">Option 3</mat-option>
+              </mat-select>
+              <mat-error
+                *ngIf="form.controls['hora_inicial'].hasError('required')"
+                >{{ getErrorMessage() }}</mat-error
+              >
+            </mat-form-field>
+          </div>
+
+          <div>
+            <mat-form-field style="width: 100%">
+              <mat-label>Selecciona la hora de fin</mat-label>
+              <mat-select [(value)]="selected2" formControlName="hora_final">
+                <mat-option>None</mat-option>
+                <mat-option value="option1">Option 1</mat-option>
+                <mat-option value="option2">Option 2</mat-option>
+                <mat-option value="option3">Option 3</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div>
+          <mat-form-field style="width: 100%">
+            <mat-label>Elige una fecha</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="fecha" />
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <div>
+            <mat-form-field style="width: auto">
+              <mat-label>¿Ordenadores?</mat-label>
+              <mat-select [(value)]="selected3" formControlName="ordenadores">
+                <mat-option value="option1">Sí</mat-option>
+                <mat-option value="option2">No</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div>
+            <mat-form-field style="width: auto">
+              <mat-label>Cantidad</mat-label>
+              <input
+                matInput
+                formControlName="cantidadOrdenadores"
+                type="number"
+              />
+              <mat-error
+                *ngIf="
+                  form.controls['cantidadOrdenadores'].hasError('required')
+                "
+                >{{ getErrorMessage() }}</mat-error
+              >
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <div>
+            <mat-form-field style="width: 100%">
+              <mat-label>¿Proyector?</mat-label>
+              <mat-select [(value)]="selected4" formControlName="proyector">
+                <mat-option value="option1">Sí</mat-option>
+                <mat-option value="option2">No</mat-option>
+              </mat-select>
+              <mat-error
+                *ngIf="form.controls['proyector'].hasError('required')"
+                >{{ getErrorMessage() }}</mat-error
+              >
+            </mat-form-field>
+          </div>
+        </div>
+
+        <br />
+
+        <!-- Botón Enviar -->
+        <div fxLayout="row" fxLayoutAlign="space-evenly center">
+          <div>
+            <button
+              style="height: 50px"
+              mat-raised-button
+              [disabled]="form.invalid"
+              [ngStyle]="{
+                'background-color': form.invalid
+                  ? 'rgb(183, 183, 183)'
+                  : '#494592',
+                color: form.invalid ? '#d4d4d4' : '#FFFFFF'
+              }"
+              type="submit"
+            >
+              Enviar
+            </button>
+          </div>
+          <div>
+            <button
+              mat-raised-button
+              routerLink="/login"
+              style="background-color: #494592; color: #ffffff; height: 50px"
+              type="button"
+            >
+              Volver
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
