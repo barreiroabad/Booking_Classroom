@@ -11,12 +11,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatNativeDateModule } from '@angular/material/core';
 
 //Modulos
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [],
@@ -34,6 +35,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatNativeDateModule,
     MatSelectModule,
     MatCheckboxModule,
+    MatSnackBarModule
   ],
   exports: [
     CommonModule,
@@ -49,6 +51,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatNativeDateModule,
     MatSelectModule,
     MatCheckboxModule,
+    MatSnackBarModule
   ],
   providers: [],
 })

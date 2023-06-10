@@ -4,8 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 @Injectable({providedIn: 'root'})
 export class MostrarNavbarService {
 
-  private mostrarNavBarSubject: BehaviorSubject<boolean> =
-    new BehaviorSubject<boolean>(true);
+  private mostrarNavBarSubject = new BehaviorSubject<boolean>(false);
 
   setMostrarNavBar(valor: boolean) {
     this.mostrarNavBarSubject.next(valor);

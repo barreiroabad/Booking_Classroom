@@ -11,6 +11,7 @@ import { ReservarClaseComponent } from './reservar-clase/reservar-clase.componen
 import { CrearClaseComponent } from './crear-clase/crear-clase.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { ConfiguracionComponent } from './usuarios/configuracion/configuracion.component';
+import { UsuariosModule } from './usuarios/usuarios.module';
 
 
 @NgModule({
@@ -21,13 +22,12 @@ import { ConfiguracionComponent } from './usuarios/configuracion/configuracion.c
     MisReservasComponent,
     ReservarClaseComponent,
     CrearClaseComponent,
-    UsuariosComponent,
-    ConfiguracionComponent
+    UsuariosComponent
   ],
   imports: [
     CommonModule,
     InicioRoutingModule,
-    SharedModule
+    SharedModule,
   ]
 })
 export class InicioModule { }

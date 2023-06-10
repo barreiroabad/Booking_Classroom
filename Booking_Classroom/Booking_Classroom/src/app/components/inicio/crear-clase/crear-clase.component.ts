@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MostrarNavbarService } from 'src/app/services/mostrar-navbar.service';
 
 @Component({
   selector: 'app-crear-clase',
@@ -15,7 +16,11 @@ export class CrearClaseComponent {
   selected3 = '';
   selected4 = '';
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private mostrarNavbarService: MostrarNavbarService
+  ) {
     this.form = this.fb.group({
       aula: [null, Validators.required],
       aforo: [null, Validators.required],
@@ -45,5 +50,10 @@ export class CrearClaseComponent {
   onEntrar() {
     console.log(this.form);
     this.router.navigate(['inicio']);
+    this.mostrarNavbarService.setMostrarNavBar(true);
+  }
+
+  onVolver() {
+    this.mostrarNavbarService.setMostrarNavBar(true);
   }
 }

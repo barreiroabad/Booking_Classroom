@@ -48,7 +48,7 @@
         <div fxLayout="row" fxLayoutAlign="space-between center">
           <div>
             <mat-form-field style="width: 100%">
-              <mat-label>Selecciona la hora de inicio</mat-label>
+              <mat-label>Hora de inicio</mat-label>
               <mat-select [(value)]="selected1" formControlName="hora_inicial">
                 <mat-option>None</mat-option>
                 <mat-option value="option1">Option 1</mat-option>
@@ -64,7 +64,7 @@
 
           <div>
             <mat-form-field style="width: 100%">
-              <mat-label>Selecciona la hora de fin</mat-label>
+              <mat-label>Hora de fin</mat-label>
               <mat-select [(value)]="selected2" formControlName="hora_final">
                 <mat-option>None</mat-option>
                 <mat-option value="option1">Option 1</mat-option>
@@ -156,9 +156,10 @@
           <div>
             <button
               mat-raised-button
-              routerLink="/login"
+              routerLink="/inicio/principal"
               style="background-color: #494592; color: #ffffff; height: 50px"
               type="button"
+              (click)="onVolver()"
             >
               Volver
             </button>

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MostrarNavbarService } from 'src/app/services/mostrar-navbar.service';
 
 @Component({
   selector: 'app-principal',
@@ -6,5 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./principal.component.css']
 })
 export class PrincipalComponent {
+
+  constructor(private mostrarNavbarService: MostrarNavbarService) {}
+
+  cambiarValor() {
+    this.mostrarNavbarService.setMostrarNavBar(false);
+  }
 
 }
