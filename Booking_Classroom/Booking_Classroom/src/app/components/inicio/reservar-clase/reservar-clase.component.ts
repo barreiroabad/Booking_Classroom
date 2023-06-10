@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MostrarNavbarService } from 'src/app/services/mostrar-navbar.service';
 
 @Component({
   selector: 'app-reservar-clase',
@@ -6,5 +7,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./reservar-clase.component.css']
 })
 export class ReservarClaseComponent {
+  constructor(private mostrarNavbarService: MostrarNavbarService) {
+    this.mostrarNavbarService.setMostrarNavBar(true);
+  }
 
 }

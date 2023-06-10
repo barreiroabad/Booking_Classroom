@@ -28,7 +28,7 @@
 
     <form [formGroup]="form" (ngSubmit)="onEntrar()">
       <div>
-        <mat-form-field style="width: 100%;">
+        <mat-form-field style="width: 100%">
           <mat-label>Email</mat-label>
           <input matInput formControlName="email" />
           <mat-error *ngIf="form.controls['email'].hasError('required')">{{
@@ -37,7 +37,7 @@
         </mat-form-field>
       </div>
       <div>
-        <mat-form-field style="width: 100%;">
+        <mat-form-field style="width: 100%">
           <mat-label>Contraseña</mat-label>
           <input
             matInput
@@ -60,6 +60,21 @@
         </mat-form-field>
       </div>
       <br />
+      <!-- Botón Enviar
+      <div fxLayout="column" fxLayoutAlign="center center">
+        <button
+          mat-raised-button
+          [disabled]="form.invalid"
+          [ngStyle]="{
+            'background-color': form.invalid ? 'rgb(183, 183, 183)' : '#494592',
+            color: form.invalid ? '#d4d4d4' : '#FFFFFF'
+          }"
+
+          type="submit"
+        >
+          Entrar
+        </button>
+      </div> -->
       <!-- Botón Enviar -->
       <div fxLayout="column" fxLayoutAlign="center center">
         <button
@@ -71,7 +86,8 @@
           }"
           type="submit"
         >
-          Entrar
+          <span *ngIf="!loading">Entrar</span>
+          <mat-spinner diameter="20" *ngIf="loading"></mat-spinner>
         </button>
       </div>
 

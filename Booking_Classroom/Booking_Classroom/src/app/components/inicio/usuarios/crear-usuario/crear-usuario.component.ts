@@ -21,6 +21,7 @@ export class CrearUsuarioComponent {
     private authService: AuthService,
     private snackBar: MatSnackBar
   ) {
+    this.mostrarNavbarService.setMostrarNavBar(false);
     this.form = this.fb.group({
       nombre: [null, Validators.required],
       apellidos: [null, Validators.required],

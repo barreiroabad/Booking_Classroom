@@ -21,6 +21,8 @@ export class CrearClaseComponent {
     private router: Router,
     private mostrarNavbarService: MostrarNavbarService
   ) {
+    this.mostrarNavbarService.setMostrarNavBar(true);
+
     this.form = this.fb.group({
       aula: [null, Validators.required],
       aforo: [null, Validators.required],

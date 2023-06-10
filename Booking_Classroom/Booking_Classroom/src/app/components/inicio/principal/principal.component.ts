@@ -8,7 +8,10 @@ import { MostrarNavbarService } from 'src/app/services/mostrar-navbar.service';
 })
 export class PrincipalComponent {
 
-  constructor(private mostrarNavbarService: MostrarNavbarService) {}
+  constructor(private mostrarNavbarService: MostrarNavbarService) {
+      this.mostrarNavbarService.setMostrarNavBar(true);
+
+  }
 
   cambiarValor() {
     this.mostrarNavbarService.setMostrarNavBar(false);

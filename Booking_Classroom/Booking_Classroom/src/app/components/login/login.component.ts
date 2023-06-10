@@ -13,6 +13,7 @@ import { MostrarNavbarService } from 'src/app/services/mostrar-navbar.service';
 export class LoginComponent implements OnInit {
   form: FormGroup;
   hide = true;
+  loading = false;
 
   constructor(
     private fb: FormBuilder,
@@ -34,26 +35,28 @@ export class LoginComponent implements OnInit {
   }
 
   onEntrar() {
-    this.authService.login(this.form.value)
-    .then(response => {
-      console.log(response);
-      this.mostrarNavbarService.setMostrarNavBar(true);
-      this.router.navigate(['inicio']);
-    })
-    .catch((error) => {console.log(error);
-      const snackBarRef = this.snackBar.open(
-        'El usuario o la contraseña son incorrectos.'
-      );
-      setTimeout(() => {
-        snackBarRef.dismiss();
-      }, 4000);});
-
-
+    this.authService
+      .login(this.form.value)
+      .then((response) => {
+        console.log(response);
+        this.loading = true;
+        setTimeout(() => {
+          this.mostrarNavbarService.setMostrarNavBar(true);
+          this.router.navigate(['inicio']);
+        }, 4000);
+      })
+      .catch((error) => {
+        console.log(error);
+        const snackBarRef = this.snackBar.open(
+          'El usuario o la contraseña son incorrectos.'
+        );
+        setTimeout(() => {
+          snackBarRef.dismiss();
+        }, 4000);
+      });
   }
 
   cambiarValor() {
     this.mostrarNavbarService.setMostrarNavBar(false);
   }
-
-
 }
