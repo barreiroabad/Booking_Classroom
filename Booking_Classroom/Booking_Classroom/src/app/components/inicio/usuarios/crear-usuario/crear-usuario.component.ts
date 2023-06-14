@@ -25,7 +25,7 @@ export class CrearUsuarioComponent {
     this.form = this.fb.group({
       nombre: [null, Validators.required],
       apellidos: [null, Validators.required],
-      email: [null, Validators.required],
+      email: [null, Validators.compose([Validators.required, Validators.email])],
       password: [null, Validators.required],
     });
   }
@@ -34,6 +34,10 @@ export class CrearUsuarioComponent {
 
   getErrorMessage() {
     return 'Campo obligatorio';
+  }
+
+  getErrorMessageEmail() {
+    return 'Email no válido';
   }
 
   onEntrar() {

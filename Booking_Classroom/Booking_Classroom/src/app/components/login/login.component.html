@@ -12,6 +12,7 @@
   <!-- Columna derecha -->
 
   <div
+    *ngIf="!recuperar"
     fxLayout="column"
     fxLayoutAlign="center center"
     style="background-color: burlywood"
@@ -32,7 +33,10 @@
           <mat-label>Email</mat-label>
           <input matInput formControlName="email" />
           <mat-error *ngIf="form.controls['email'].hasError('required')">{{
-            getErrorMessage()
+            getErrorMessageRequired()
+          }}</mat-error>
+          <mat-error *ngIf="form.controls['email'].hasError('email')">{{
+            getErrorMessageEmail()
           }}</mat-error>
         </mat-form-field>
       </div>
@@ -55,7 +59,7 @@
             <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
           </button>
           <mat-error *ngIf="form.controls['password'].hasError('required')">{{
-            getErrorMessage()
+            getErrorMessageRequired()
           }}</mat-error>
         </mat-form-field>
       </div>
@@ -94,7 +98,7 @@
       <!-- Registro -->
       <div fxLayout="column" fxLayoutAlign="center center">
         <br />
-        <p style="font-size: 12px; color: rgb(88, 88, 88)">
+        <p style="font-size: 12px; color: rgb(0, 0, 0); margin-top: 2%">
           ¿No tines cuenta?
           <span
             ><a
@@ -106,6 +110,79 @@
           >
         </p>
       </div>
+
+      <!-- Recuperar contraseña -->
+      <div fxLayout="column" fxLayoutAlign="center center">
+        <br />
+        <p style="font-size: 12px; color: rgb(88, 88, 88)">
+          <a
+            (click)="activaRecuperar()"
+            style="font-weight: bold"
+            routerLink="login"
+            >Recuperar contraseña</a
+          >
+        </p>
+      </div>
     </form>
   </div>
+
+  <div
+    *ngIf="recuperar"
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    style="background-color: burlywood"
+    fxFlex="auto"
+  >
+  <div fxLayout="row" fxLayoutAlign="space-around stretch">
+    <div>
+      <h1 class="login">Recuperar Contraseña</h1>
+    </div>
+  </div>
+
+  <form [formGroup]="form2" (ngSubmit)="onRecuperar()">
+    <div>
+      <mat-form-field style="width: 100%">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" />
+        <mat-error *ngIf="form2.controls['email'].hasError('required')">{{
+          getErrorMessageRequired()
+        }}</mat-error>
+        <mat-error *ngIf="form2.controls['email'].hasError('email')">{{
+          getErrorMessageEmail()
+        }}</mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- Botón Enviar -->
+    <div fxLayout="row" fxLayoutAlign="center center">
+      <div style="margin-right: 2%;">
+        <button
+          style="height: 50px"
+          mat-raised-button
+          [disabled]="form2.invalid"
+          [ngStyle]="{
+            'background-color': form2.invalid
+              ? 'rgb(183, 183, 183)'
+              : '#494592',
+            color: form2.invalid ? '#d4d4d4' : '#FFFFFF'
+          }"
+          type="submit"
+        >
+          Aceptar
+        </button>
+      </div>
+      <div>
+        <button
+          mat-raised-button
+          style="background-color: #494592; color: #ffffff; height: 50px"
+          type="button"
+          (click)="cancelar()"
+        >
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </form>
+
+</div>
 </div>

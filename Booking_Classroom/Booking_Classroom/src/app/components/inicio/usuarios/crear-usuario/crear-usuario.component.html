@@ -53,6 +53,9 @@
             <mat-error *ngIf="form.controls['email'].hasError('required')">{{
               getErrorMessage()
             }}</mat-error>
+            <mat-error *ngIf="form.controls['email'].hasError('email')">{{
+              getErrorMessageEmail()
+            }}</mat-error>
           </mat-form-field>
         </div>
         <div>

@@ -1,7 +1,6 @@
 <mat-toolbar *ngIf="mostrarNavBar" class="barra">
   <button
     routerLink="/inicio/principal"
-    routerLinkActive="active2"
     mat-icon-button
     class="boton-pequeño"
     style="margin-right: 2%"
@@ -9,7 +8,11 @@
     <mat-icon>home</mat-icon>
   </button>
 
-  <button
+  <div>
+    <p>¡Hola, {{ usuario }}!</p>
+  </div>
+
+  <!-- <button
     routerLink="/inicio/mis-reservas"
     routerLinkActive="active"
     mat-button
@@ -26,7 +29,7 @@
     class="botones"
   >
     Reservar Clase
-  </button>
+  </button> -->
   <span class="example-spacer"></span>
   <button
     routerLink="/inicio/configuracion"

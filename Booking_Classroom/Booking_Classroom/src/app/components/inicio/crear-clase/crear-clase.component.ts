@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ClasesService } from 'src/app/services/clases.service';
 import { MostrarNavbarService } from 'src/app/services/mostrar-navbar.service';
 
 @Component({
@@ -11,15 +12,13 @@ import { MostrarNavbarService } from 'src/app/services/mostrar-navbar.service';
 export class CrearClaseComponent {
   form: FormGroup;
   hide = true;
-  selected1 = '';
-  selected2 = '';
-  selected3 = '';
-  selected4 = '';
+  horas = Array.from(Array(24).keys());
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private mostrarNavbarService: MostrarNavbarService
+    private mostrarNavbarService: MostrarNavbarService,
+    private clasesServices: ClasesService
   ) {
     this.mostrarNavbarService.setMostrarNavBar(true);
 
@@ -29,30 +28,34 @@ export class CrearClaseComponent {
       hora_inicial: [{ value: null }, Validators.required],
       hora_final: [{ value: null }, Validators.required],
       fecha: [null, Validators.required],
-      ordenadores: ['option2', Validators.required],
-      cantidadOrdenadores: [{ value: '', disabled: true }, Validators.required],
-      proyector: ['option2', Validators.required],
+      ordenadores: ['No', Validators.required],
+      // cantidadOrdenadores: [{ value: '', disabled: true }, Validators.required],
+      proyector: ['No', Validators.required],
     });
   }
 
+
+
   ngOnInit() {
-    this.form.get('ordenadores')?.valueChanges.subscribe((value) => {
-      if (value === 'option1') {
-        this.form.get('cantidadOrdenadores')?.enable();
-      } else {
-        this.form.get('cantidadOrdenadores')?.disable();
-      }
-    });
+    // this.form.get('ordenadores')?.valueChanges.subscribe((value) => {
+    //   if (value === 'Si') {
+    //     this.form.get('cantidadOrdenadores')?.enable();
+    //   } else {
+    //     this.form.get('cantidadOrdenadores')?.disable();
+    //   }
+    // });
   }
 
   getErrorMessage() {
     return 'Campo obligatorio';
   }
 
-  onEntrar() {
-    console.log(this.form);
+  async onEntrar() {
+    console.log(this.form.value);
     this.router.navigate(['inicio']);
     this.mostrarNavbarService.setMostrarNavBar(true);
+    const response = await this.clasesServices.addAula(this.form.value);
+    console.log(response);
   }
 
   onVolver() {

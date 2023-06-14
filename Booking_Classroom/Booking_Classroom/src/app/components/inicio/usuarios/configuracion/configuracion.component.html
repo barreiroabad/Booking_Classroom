@@ -22,30 +22,12 @@
         <div fxLayout="column" fxLayoutAlign="space-between center">
           <div>
             <mat-form-field style="width: 100%">
-              <mat-label>Contraseña actual</mat-label>
-              <input matInput formControlName="actual" />
-              <mat-error *ngIf="form.controls['actual'].hasError('required')">{{
-                getErrorMessage()
-              }}</mat-error>
-              <button
-                mat-icon-button
-                matSuffix
-                (click)="hide = !hide"
-                [attr.aria-label]="'Hide password'"
-                [attr.aria-pressed]="hide"
-                type="button"
-              >
-                <mat-icon>{{
-                  hide ? "visibility_off" : "visibility"
-                }}</mat-icon>
-              </button>
-            </mat-form-field>
-          </div>
-
-          <div>
-            <mat-form-field style="width: 100%">
               <mat-label>Nueva contraseña</mat-label>
-              <input matInput formControlName="nueva" />
+              <input
+                matInput
+                formControlName="nueva"
+                [type]="hide ? 'password' : 'text'"
+              />
               <mat-error *ngIf="form.controls['nueva'].hasError('required')">{{
                 getErrorMessage()
               }}</mat-error>
@@ -67,10 +49,18 @@
           <div>
             <mat-form-field style="width: 100%">
               <mat-label>Repetir contraseña</mat-label>
-              <input matInput formControlName="repetir" />
-              <mat-error *ngIf="form.controls['repetir'].hasError('required')">{{
-                getErrorMessage()
-              }}</mat-error>
+              <input
+                matInput
+                formControlName="repetir"
+                [type]="hide ? 'password' : 'text'"
+              />
+              <mat-error
+                *ngIf="form.controls['repetir'].hasError('required')"
+                >{{ getErrorMessage() }}</mat-error
+              >
+              <mat-error *ngIf="form.controls['repetir'].hasError('matching')">
+                La contraseña debe coincidir.
+              </mat-error>
               <button
                 mat-icon-button
                 matSuffix
@@ -88,8 +78,8 @@
         </div>
 
         <!-- Botón Enviar -->
-        <div fxLayout="row" fxLayoutAlign="center center">
-          <div style="margin-right: 2%;">
+        <div fxLayout="row" fxLayoutAlign="center center" style="margin-top: 5%;">
+          <div style="margin-right: 2%">
             <button
               style="height: 50px"
               mat-raised-button

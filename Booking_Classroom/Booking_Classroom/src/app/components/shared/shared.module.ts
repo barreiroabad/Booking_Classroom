@@ -14,6 +14,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCardModule } from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
 
 //Modulos
 
@@ -38,6 +40,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatCheckboxModule,
     MatSnackBarModule,
     MatProgressSpinnerModule,
+    MatCardModule,
+    MatListModule,
   ],
   exports: [
     CommonModule,
@@ -55,6 +59,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatCheckboxModule,
     MatSnackBarModule,
     MatProgressSpinnerModule,
+    MatCardModule,
+    MatListModule,
   ],
   providers: [],
 })
