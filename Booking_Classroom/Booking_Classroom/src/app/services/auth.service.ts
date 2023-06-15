@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   Auth,
   User,
+  authState,
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
@@ -9,6 +10,7 @@ import {
   updatePassword,
   updateProfile,
 } from '@angular/fire/auth';
+import { stateChanges } from '@angular/fire/database';
 
 @Injectable({
   providedIn: 'root',
@@ -67,5 +69,9 @@ export class AuthService {
 
   getEmailUsuario() {
     return this.getUsuario()?.email;
+  }
+
+  getEstadoConexion() {
+    return authState(this.auth);
   }
 }

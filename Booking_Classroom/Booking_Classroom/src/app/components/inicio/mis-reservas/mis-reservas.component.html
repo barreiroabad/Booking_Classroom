@@ -1,1 +1,67 @@
-<p>mis-reservas works!</p>
+<div class="tabla-container">
+
+  <div class="titulo-container">
+    <h1>Mis reservas</h1>
+  </div>
+
+  <table mat-table [dataSource]="aulasFiltradas" class="mat-elevation-z8">
+    <!-- Columna Aula -->
+    <ng-container matColumnDef="aula">
+      <th mat-header-cell *matHeaderCellDef>Aula</th>
+      <td mat-cell *matCellDef="let aula">{{ aula.aula }}</td>
+    </ng-container>
+
+    <!-- Columna Fecha -->
+    <ng-container matColumnDef="fecha">
+      <th mat-header-cell *matHeaderCellDef>Fecha</th>
+      <td mat-cell *matCellDef="let aula">
+        {{ obtenerFechaLegible(aula.fecha.seconds) }}
+      </td>
+    </ng-container>
+
+    <!-- Columna Hora Inicial -->
+    <ng-container matColumnDef="horaInicial">
+      <th mat-header-cell *matHeaderCellDef>Hora Inicial</th>
+      <td mat-cell *matCellDef="let aula">
+        {{ aula.hora_inicial | number : "2.0" }}:00
+      </td>
+    </ng-container>
+
+    <!-- Columna Hora Final -->
+    <ng-container matColumnDef="horaFinal">
+      <th mat-header-cell *matHeaderCellDef>Hora Final</th>
+      <td mat-cell *matCellDef="let aula">
+        {{ aula.hora_final | number : "2.0" }}:00
+      </td>
+    </ng-container>
+
+    <!-- Columna Ordenadores -->
+    <ng-container matColumnDef="ordenadores">
+      <th mat-header-cell *matHeaderCellDef>Ordenadores</th>
+      <td mat-cell *matCellDef="let aula">
+        {{ aula.ordenadores }}
+      </td>
+    </ng-container>
+
+    <!-- Columna Proyector -->
+    <ng-container matColumnDef="proyector">
+      <th mat-header-cell *matHeaderCellDef>Proyector</th>
+      <td mat-cell *matCellDef="let aula">
+        {{ aula.proyector }}
+      </td>
+    </ng-container>
+
+    <!-- Columna Acciones -->
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let aula">
+        <button mat-button color="primary" (click)="cancelarReserva(aula)">
+          Cancelar reserva
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnas"></tr>
+  </table>
+</div>

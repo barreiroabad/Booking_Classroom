@@ -32,6 +32,11 @@
             *ngIf="form.controls['hora_inicial'].hasError('required')"
             >{{ getErrorMessage() }}</mat-error
           >
+          <mat-error
+            *ngIf="form.controls['hora_final'].hasError('horaFinalMenor')"
+          >
+            {{ "Debe ser posterior a la inicial" }}
+          </mat-error>
         </mat-form-field>
       </div>
 
@@ -46,10 +51,11 @@
           <mat-error *ngIf="form.controls['hora_final'].hasError('required')">{{
             getErrorMessage()
           }}</mat-error>
-          <mat-error *ngIf="form.controls['hora_final'].hasError('horaFinalMenor')">
-            {{ 'Debe ser posterior a la inicial' }}
+          <mat-error
+            *ngIf="form.controls['hora_final'].hasError('horaFinalMenor')"
+          >
+            {{ "Debe ser posterior a la inicial" }}
           </mat-error>
-
         </mat-form-field>
       </div>
 
@@ -63,7 +69,6 @@
             min="0"
             max="50"
           />
-
         </mat-form-field>
       </div>
 
@@ -156,7 +161,12 @@
                   Hora final: {{ aula.hora_final | number : "2.0" }}:00
                 </mat-card-content>
                 <mat-card-actions align="start">
-                  <button mat-stroked-button color="primary" type="button" (click)="reservar(aula)">
+                  <button
+                    mat-stroked-button
+                    color="primary"
+                    type="button"
+                    (click)="reservar(aula)"
+                  >
                     Reservar
                   </button>
                 </mat-card-actions>

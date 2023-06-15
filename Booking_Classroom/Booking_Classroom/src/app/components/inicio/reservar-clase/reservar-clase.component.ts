@@ -24,6 +24,7 @@ export class ReservarClaseComponent implements OnInit {
   mostrarElemento = true;
   fechas: number[] = [];
   aulasFiltradas: Aula[] = [];
+  isUpdating: boolean = false;
 
   constructor(
     private mostrarNavbarService: MostrarNavbarService,
@@ -31,7 +32,7 @@ export class ReservarClaseComponent implements OnInit {
     private clasesServices: ClasesService,
     private snackBar: MatSnackBar,
     private authService: AuthService,
-    private router: Router,
+    private router: Router
   ) {
     this.mostrarNavbarService.setMostrarNavBar(true);
 
@@ -39,12 +40,29 @@ export class ReservarClaseComponent implements OnInit {
 
     this.form = this.fb.group({
       aforo: [null],
-      hora_inicial: ['8', Validators.required],
-      hora_final: ['20', [Validators.required, this.validateHoraFinal]],
+      hora_inicial: [null, Validators.required],
+      hora_final: [null, [Validators.required, this.validateHoraFinal]],
       fecha: [0, Validators.required],
       ordenadores: ['No'],
       // cantidadOrdenadores: [{ value: '', disabled: true }, Validators.required],
       proyector: ['No'],
+    });
+
+    // Suscribirse a los cambios de los campos hora_inicial y hora_final
+    this.form.get('hora_inicial')?.valueChanges.subscribe(() => {
+      if (!this.isUpdating) {
+        this.isUpdating = true;
+        this.form.controls['hora_final'].updateValueAndValidity();
+        this.isUpdating = false;
+      }
+    });
+
+    this.form.get('hora_final')?.valueChanges.subscribe(() => {
+      if (!this.isUpdating) {
+        this.isUpdating = true;
+        this.form.controls['hora_inicial'].updateValueAndValidity();
+        this.isUpdating = false;
+      }
     });
   }
 
@@ -55,7 +73,7 @@ export class ReservarClaseComponent implements OnInit {
         const horaInicial = horaInicialControl;
         const horaFinal = +control.value;
 
-        if (horaInicial && horaFinal && horaFinal <= horaInicial) {
+        if (horaFinal <= horaInicial) {
           return { horaFinalMenor: true };
         }
       }
@@ -63,15 +81,7 @@ export class ReservarClaseComponent implements OnInit {
     return null;
   }
 
-  ngOnInit() {
-    // this.form.get('ordenadores')?.valueChanges.subscribe((value) => {
-    //   if (value === 'Si') {
-    //     this.form.get('cantidadOrdenadores')?.enable();
-    //   } else {
-    //     this.form.get('cantidadOrdenadores')?.disable();
-    //   }
-    // });
-  }
+  ngOnInit() {}
 
   getErrorMessage() {
     return 'Campo obligatorio';
@@ -101,17 +111,11 @@ export class ReservarClaseComponent implements OnInit {
         return false;
       }
 
-      if (
-        filtro.hora_inicial &&
-        (aula.hora_inicial) < (filtro.hora_inicial)
-      ) {
+      if (filtro.hora_inicial && aula.hora_inicial < filtro.hora_inicial) {
         return false;
       }
 
-      if (
-        filtro.hora_final &&
-        (aula.hora_final) > (filtro.hora_final)
-      ) {
+      if (filtro.hora_final && aula.hora_final > filtro.hora_final) {
         return false;
       }
 
@@ -164,13 +168,9 @@ export class ReservarClaseComponent implements OnInit {
     this.clasesServices
       .addReserva(aula)
       .then((response) => {
-        this.snackBar.open(
-          'Aula reservada con éxito',
-          '',
-          {
-            duration: 3000,
-          }
-        );
+        this.snackBar.open('Aula reservada con éxito', '', {
+          duration: 3000,
+        });
         this.router.navigate(['inicio/principal']);
       })
       .catch((error) => console.log(error));

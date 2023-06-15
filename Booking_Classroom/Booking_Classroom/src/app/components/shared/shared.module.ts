@@ -16,6 +16,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
+import { MatTableModule } from '@angular/material/table';
 
 //Modulos
 
@@ -42,6 +43,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatProgressSpinnerModule,
     MatCardModule,
     MatListModule,
+    MatTableModule
   ],
   exports: [
     CommonModule,
@@ -61,6 +63,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatProgressSpinnerModule,
     MatCardModule,
     MatListModule,
+    MatTableModule
   ],
   providers: [],
 })
