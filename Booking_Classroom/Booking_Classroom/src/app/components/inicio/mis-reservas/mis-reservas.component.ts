@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Aula } from 'src/app/models/aula.model';
@@ -24,7 +25,8 @@ export class MisReservasComponent implements OnInit {
     private clasesServices: ClasesService,
     private authService: AuthService,
     private snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialogModule
   ) {
     this.mostrarNavbarService.setMostrarNavBar(true);
   }
@@ -43,8 +45,6 @@ export class MisReservasComponent implements OnInit {
 
   verAulas() {
     this.mostrarElemento = true;
-    console.log(this.aulasFiltradas);
-    console.log(this.aulas);
     const email = this.authService.getEmailUsuario();
 
     // Realizar el filtrado de las aulas
@@ -62,11 +62,11 @@ export class MisReservasComponent implements OnInit {
     }
 
     this.aulasFiltradas = aulasFiltradas;
-    console.log(email);
   }
 
   cancelarReserva(aula: Aula) {
-    this.clasesServices
+    if (confirm('¿Estás seguro de que deseas reservar esta aula?')) {
+      this.clasesServices
       .deleteReserva(aula)
       .then(() => {
         this.snackBar.open('Reserva cancelada con éxito', '', {
@@ -75,5 +75,11 @@ export class MisReservasComponent implements OnInit {
         this.verAulas();
       })
       .catch((error) => console.log(error));
+    } else {
+      return
+    }
+
   }
+
+
 }

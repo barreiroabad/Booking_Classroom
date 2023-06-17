@@ -10,13 +10,15 @@ import {
   updatePassword,
   updateProfile,
 } from '@angular/fire/auth';
-import { stateChanges } from '@angular/fire/database';
+import { Observable } from 'rxjs';
+import { Firestore, collection, collectionData } from '@angular/fire/firestore';
+import { Administradores } from '../models/administradores.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private auth: Auth) {}
+  constructor(private auth: Auth, private firestore: Firestore) {}
 
   registro({
     nombre,
@@ -73,5 +75,10 @@ export class AuthService {
 
   getEstadoConexion() {
     return authState(this.auth);
+  }
+
+  getAdministradores(): Observable<Administradores[]> {
+    const adminRef = collection(this.firestore, 'administradores');
+    return collectionData(adminRef, {idField: 'id'}) as Observable<Administradores[]>;
   }
 }

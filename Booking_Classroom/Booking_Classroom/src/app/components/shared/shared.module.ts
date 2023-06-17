@@ -17,6 +17,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatTableModule } from '@angular/material/table';
+import { MatDialogModule} from '@angular/material/dialog';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 //Modulos
 
@@ -43,7 +45,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatProgressSpinnerModule,
     MatCardModule,
     MatListModule,
-    MatTableModule
+    MatTableModule,
+    MatDialogModule,
+    MatPaginatorModule
+
   ],
   exports: [
     CommonModule,
@@ -63,7 +68,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatProgressSpinnerModule,
     MatCardModule,
     MatListModule,
-    MatTableModule
+    MatTableModule,
+    MatDialogModule,
+    MatPaginatorModule
   ],
   providers: [],
 })

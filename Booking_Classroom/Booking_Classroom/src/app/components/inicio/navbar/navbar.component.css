@@ -48,3 +48,7 @@
   50% { background-color: white; }
   100% { background-color: burlywood; }
 }
+
+.usuario {
+  margin-top: 2vh;
+}

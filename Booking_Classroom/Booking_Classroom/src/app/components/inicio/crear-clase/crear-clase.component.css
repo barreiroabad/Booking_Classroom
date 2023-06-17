@@ -7,3 +7,12 @@ img {
   color: #494592;
   font-size: 20pt;
 }
+
+.two-fields mat-form-field{
+  width: 45%;
+}
+
+.two-fields .segundo{
+  margin-left: 10%;
+}
+

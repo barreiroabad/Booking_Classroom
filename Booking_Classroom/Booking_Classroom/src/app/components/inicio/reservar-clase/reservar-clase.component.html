@@ -17,6 +17,9 @@
           <mat-error *ngIf="form.controls['fecha'].hasError('required')">{{
             getErrorMessage()
           }}</mat-error>
+          <mat-error *ngIf="form.get('fecha')?.hasError('fechaInvalida')">{{
+            "No se puede seleccionar una fecha anterior a la fecha actual."
+          }}</mat-error>
         </mat-form-field>
       </div>
 
@@ -82,23 +85,6 @@
         </mat-form-field>
       </div>
 
-      <!-- <div>
-          <mat-form-field style="width: auto">
-            <mat-label>Cantidad</mat-label>
-            <input
-              matInput
-              formControlName="cantidadOrdenadores"
-              type="number"
-              min="0"
-              max="50"
-            />
-            <mat-error
-              *ngIf="form.controls['cantidadOrdenadores'].hasError('required')"
-              >{{ getErrorMessage() }}</mat-error
-            >
-          </mat-form-field>
-        </div> -->
-
       <div>
         <mat-form-field style="width: 100%">
           <mat-label>¿Necesitas proyector?</mat-label>
@@ -149,12 +135,7 @@
             <mat-list-item style="width: 500px; height: 160px">
               <mat-card>
                 <mat-card-header>
-                  <mat-card-title
-                    >Aula: {{ aula.aula }} |
-                    <span class="fecha">
-                      Fecha: {{ obtenerFechaLegible(aula.fecha.seconds) }}</span
-                    ></mat-card-title
-                  >
+                  <mat-card-title>Aula: {{ aula.aula }} </mat-card-title>
                 </mat-card-header>
                 <mat-card-content>
                   Hora inicial: {{ aula.hora_inicial | number : "2.0" }}:00 |

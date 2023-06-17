@@ -17,12 +17,13 @@
   </button>
   <br />
   <button
+    *ngIf="mostrarBoton"
     routerLink="/inicio/crear-clase"
     mat-button
     style="color: burlywood"
     class="botones2"
     (click)="cambiarValor()"
   >
-    Crear Clase
+    Administrar Clases
   </button>
 </div>

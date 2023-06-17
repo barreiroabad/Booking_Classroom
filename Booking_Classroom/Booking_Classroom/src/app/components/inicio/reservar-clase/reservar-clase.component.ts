@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
@@ -8,7 +9,6 @@ import {
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Aula } from 'src/app/models/aula.model';
-import { AuthService } from 'src/app/services/auth.service';
 import { ClasesService } from 'src/app/services/clases.service';
 import { MostrarNavbarService } from 'src/app/services/mostrar-navbar.service';
 
@@ -25,13 +25,13 @@ export class ReservarClaseComponent implements OnInit {
   fechas: number[] = [];
   aulasFiltradas: Aula[] = [];
   isUpdating: boolean = false;
+  formValue: any;
 
   constructor(
     private mostrarNavbarService: MostrarNavbarService,
     private fb: FormBuilder,
     private clasesServices: ClasesService,
     private snackBar: MatSnackBar,
-    private authService: AuthService,
     private router: Router
   ) {
     this.mostrarNavbarService.setMostrarNavBar(true);
@@ -42,10 +42,9 @@ export class ReservarClaseComponent implements OnInit {
       aforo: [null],
       hora_inicial: [null, Validators.required],
       hora_final: [null, [Validators.required, this.validateHoraFinal]],
-      fecha: [0, Validators.required],
-      ordenadores: ['No'],
-      // cantidadOrdenadores: [{ value: '', disabled: true }, Validators.required],
-      proyector: ['No'],
+      fecha: [0, [Validators.required, this.validatefecha]],
+      ordenadores: [null, Validators.required],
+      proyector: [null, Validators.required],
     });
 
     // Suscribirse a los cambios de los campos hora_inicial y hora_final
@@ -64,6 +63,17 @@ export class ReservarClaseComponent implements OnInit {
         this.isUpdating = false;
       }
     });
+  }
+
+  validatefecha(control: AbstractControl): { [key: string]: boolean } | null {
+    const seleccionFecha: Date = control.value;
+    const fechaActual: Date = new Date();
+
+    if (seleccionFecha < fechaActual) {
+      return { fechaInvalida: true };
+    }
+
+    return null;
   }
 
   validateHoraFinal(control: FormControl) {
@@ -94,20 +104,23 @@ export class ReservarClaseComponent implements OnInit {
 
   verAulas() {
     this.mostrarElemento = false;
-    console.log(this.aulasFiltradas);
-    console.log(this.aulas);
 
     // Obtener los valores del formulario
     const filtro = this.form.value;
+    this.formValue = this.form.value;
 
     // Realizar el filtrado de las aulas
     const aulasFiltradas = this.aulas.filter((aula) => {
       //retorna true si el aula cumple con las condiciones, false en caso contrario
 
-      if (
-        filtro.fecha &&
-        aula.fecha.seconds !== filtro.fecha.getTime() / 1000
-      ) {
+      // if (
+      //   filtro.fecha &&
+      //   aula.reserva.fecha.seconds !== filtro.fecha.getTime() / 1000
+      // ) {
+      //   return false;
+      // }
+
+      if (filtro.fecha && aula.dia !== filtro.fecha.getDay()) {
         return false;
       }
 
@@ -159,15 +172,19 @@ export class ReservarClaseComponent implements OnInit {
 
     // Hacer algo con las aulas filtradas (por ejemplo, asignarlas a una propiedad del componente)
     this.aulasFiltradas = aulasFiltradas;
-    console.log(filtro);
+    this.form.reset();
   }
 
   reservar(aula: Aula) {
-    const email = this.authService.getEmailUsuario();
-    console.log(email);
+    const fechaMilisegundos = this.formValue.fecha.getTime();
+    const fecha = {
+      seconds: Math.floor(fechaMilisegundos / 1000),
+      miliseconds: fechaMilisegundos % 1000,
+    };
+
     this.clasesServices
-      .addReserva(aula)
-      .then((response) => {
+      .addReserva(aula, fecha)
+      .then(() => {
         this.snackBar.open('Aula reservada con éxito', '', {
           duration: 3000,
         });

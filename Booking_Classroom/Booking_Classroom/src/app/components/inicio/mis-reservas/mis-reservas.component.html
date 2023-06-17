@@ -1,5 +1,4 @@
 <div class="tabla-container">
-
   <div class="titulo-container">
     <h1>Mis reservas</h1>
   </div>
@@ -13,9 +12,9 @@
 
     <!-- Columna Fecha -->
     <ng-container matColumnDef="fecha">
-      <th mat-header-cell *matHeaderCellDef>Fecha</th>
+      <th mat-header-cell *matHeaderCellDef>Fecha (dd/mm/yyyy)</th>
       <td mat-cell *matCellDef="let aula">
-        {{ obtenerFechaLegible(aula.fecha.seconds) }}
+         {{ aula.reserva?.fecha ? obtenerFechaLegible(aula.reserva.fecha.seconds) : '' }}
       </td>
     </ng-container>
 
@@ -56,6 +55,9 @@
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let aula">
         <button mat-button color="primary" (click)="cancelarReserva(aula)">
+          <mat-icon class="login"
+            ><span class="material-symbols-outlined"> delete </span></mat-icon
+          >
           Cancelar reserva
         </button>
       </td>
