@@ -143,26 +143,28 @@ export class CrearClaseComponent {
     //const response = await this.clasesServices.addAula(this.form.value);
 
     // Crear objeto aula con los valores del formulario
-  const aula: Aula = {
-    id: '', // Asignar un valor adecuado si es necesario
-    aula: this.form.get('aula')?.value,
-    aforo: parseInt(this.form.get('aforo')?.value),
-    hora_inicial: parseInt(this.form.get('hora_inicial')?.value),
-    hora_final: parseInt(this.form.get('hora_final')?.value),
-    dia: parseInt(this.form.get('dia')?.value),
-    ordenadores: this.form.get('ordenadores')?.value,
-    proyector: this.form.get('proyector')?.value,
-    reserva: {
-      reservada: false, // Valor predeterminado o según tus necesidades
-      email: '', // Valor predeterminado o según tus necesidades
-      fecha: { seconds: 0, miliseconds: 0 } // Valor predeterminado o según tus necesidades
+    const aula: Aula = {
+      id: '', // Asignar un valor adecuado si es necesario
+      aula: this.form.get('aula')?.value,
+      aforo: parseInt(this.form.get('aforo')?.value),
+      hora_inicial: parseInt(this.form.get('hora_inicial')?.value),
+      hora_final: parseInt(this.form.get('hora_final')?.value),
+      dia: parseInt(this.form.get('dia')?.value),
+      ordenadores: this.form.get('ordenadores')?.value,
+      proyector: this.form.get('proyector')?.value,
+    };
+
+    // Verificar si hay solapamiento
+    if (this.compruebaSolapamiento(aula)) {
+      this.snackBar.open('El aula se solapa con otra clase existente', '', {
+        duration: 3000,
+      });
+      return; // No se crea el aula
     }
-  };
 
     // Guardar el valor del formulario antes de restablecerlo
     this.formValue = this.form.value;
     this.form.reset();
-
 
     this.clasesServices
       .addAula(aula)
@@ -178,8 +180,6 @@ export class CrearClaseComponent {
           duration: 3000,
         });
       });
-
-
   }
 
   onVolver() {
@@ -213,5 +213,25 @@ export class CrearClaseComponent {
       'Sábado',
     ];
     return nombresDias[numeroDia];
+  }
+
+  compruebaSolapamiento(aula: Aula): boolean {
+    const aulasSolapadas = this.aulas.filter((_aula) => {
+      if (_aula.aula === aula.aula && _aula.dia === aula.dia) {
+        if (
+          (_aula.hora_inicial >= aula.hora_inicial &&
+            _aula.hora_inicial < aula.hora_final) ||
+          (_aula.hora_final > aula.hora_inicial &&
+            _aula.hora_final <= aula.hora_final) ||
+          (_aula.hora_inicial <= aula.hora_inicial &&
+            _aula.hora_final >= aula.hora_final)
+        ) {
+          return true;
+        }
+      }
+      return false;
+    });
+
+    return aulasSolapadas.length > 0;
   }
 }

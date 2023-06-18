@@ -28,8 +28,6 @@ export class PrincipalComponent implements OnInit {
     .subscribe((email) => {
       this.emailAdmin = email;
       this.compruebaEmail();
-      console.log(...this.emailAdmin);
-      console.log(this.emailUsuario);
     });
   }
 

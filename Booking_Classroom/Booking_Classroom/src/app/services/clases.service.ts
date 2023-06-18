@@ -1,17 +1,27 @@
 import { Injectable, OnInit } from '@angular/core';
-import { Firestore, collection, addDoc, collectionData, doc, updateDoc, deleteDoc } from '@angular/fire/firestore';
+import {
+  Firestore,
+  collection,
+  addDoc,
+  collectionData,
+  doc,
+  updateDoc,
+  deleteDoc,
+  setDoc,
+} from '@angular/fire/firestore';
 import { Aula } from '../models/aula.model';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
+import { Reservas } from '../models/reservas.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ClasesService implements OnInit {
-  aulas: Aula[] = [];
+  //aulas: Aula[] = [];
   constructor(private firestore: Firestore, private authService: AuthService) {}
   ngOnInit() {
-    this.getAulas().subscribe((aulas) => (this.aulas = aulas));
+    //this.getAulas().subscribe((aulas) => (this.aulas = aulas));
   }
 
   addAula(aula: Aula) {
@@ -21,35 +31,26 @@ export class ClasesService implements OnInit {
 
   deleteAula(aula: Aula) {
     const aulaRef = doc(this.firestore, 'aulas', aula.id);
-    return deleteDoc(aulaRef)
+    return deleteDoc(aulaRef);
   }
 
   getAulas(): Observable<Aula[]> {
     const aulaRef = collection(this.firestore, 'aulas');
-    return collectionData(aulaRef, {idField: 'id'}) as Observable<Aula[]>;
+    return collectionData(aulaRef, { idField: 'id' }) as Observable<Aula[]>;
   }
 
-  addReserva(aula: Aula, fecha: { seconds: number; miliseconds: number }) {
-    const aulaRef = doc(this.firestore, 'aulas', aula.id);
-    const reserva = {
-      reservada: true,
-      email: this.authService.getEmailUsuario(),
-      fecha: {
-        seconds: fecha.seconds,
-        miliseconds: fecha.miliseconds
-      }
-    };
-    return updateDoc(aulaRef, { reserva });
+  addReserva(reserva: Reservas) {
+    const reservasRef = collection(this.firestore, 'reservas');
+    return addDoc(reservasRef, reserva);
   }
 
-  deleteReserva(aula: Aula) {
-    const aulaRef = doc(this.firestore, 'aulas', aula.id);
-    const reserva = {
-      reservada: false,
-      email: null,
-      fecha: null
+  deleteReserva(reserva: Reservas) {
+    const reservaRef = doc(this.firestore, 'reservas', reserva.id);
+    return deleteDoc(reservaRef);
+  }
 
-    };
-    return updateDoc(aulaRef, { reserva });
+  getReservas(): Observable<Reservas[]> {
+    const reservaRef = collection(this.firestore, 'reservas');
+    return collectionData(reservaRef, { idField: 'id' }) as Observable<Reservas[]>;
   }
 }

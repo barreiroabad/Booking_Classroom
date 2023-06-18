@@ -6,10 +6,5 @@ export interface Aula {
   hora_final: number;
   ordenadores: string;
   proyector: string;
-  reserva: {
-    reservada: boolean;
-    email: string;
-    fecha: { seconds: number; miliseconds: number };
-  };
   dia: number;
 }

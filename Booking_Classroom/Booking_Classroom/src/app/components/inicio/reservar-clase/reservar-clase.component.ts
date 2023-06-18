@@ -9,6 +9,8 @@ import {
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Aula } from 'src/app/models/aula.model';
+import { Reservas } from 'src/app/models/reservas.model';
+import { AuthService } from 'src/app/services/auth.service';
 import { ClasesService } from 'src/app/services/clases.service';
 import { MostrarNavbarService } from 'src/app/services/mostrar-navbar.service';
 
@@ -20,10 +22,12 @@ import { MostrarNavbarService } from 'src/app/services/mostrar-navbar.service';
 export class ReservarClaseComponent implements OnInit {
   form: FormGroup;
   aulas: Aula[] = [];
-  horas = Array.from(Array(24).keys());
-  mostrarElemento = true;
+  reservas: Reservas[] = [];
   fechas: number[] = [];
   aulasFiltradas: Aula[] = [];
+  aulasDisponiblesFiltradas: Aula[] = [];
+  horas = Array.from(Array(24).keys());
+  mostrarElemento = true;
   isUpdating: boolean = false;
   formValue: any;
 
@@ -32,11 +36,15 @@ export class ReservarClaseComponent implements OnInit {
     private fb: FormBuilder,
     private clasesServices: ClasesService,
     private snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {
     this.mostrarNavbarService.setMostrarNavBar(true);
 
     this.clasesServices.getAulas().subscribe((aulas) => (this.aulas = aulas));
+    this.clasesServices
+      .getReservas()
+      .subscribe((reservas) => (this.reservas = reservas));
 
     this.form = this.fb.group({
       aforo: [null],
@@ -68,8 +76,12 @@ export class ReservarClaseComponent implements OnInit {
   validatefecha(control: AbstractControl): { [key: string]: boolean } | null {
     const seleccionFecha: Date = control.value;
     const fechaActual: Date = new Date();
+    const diaActual = fechaActual.getDate();
+    const mesActual = fechaActual.getMonth();
+    const anioActual = fechaActual.getFullYear();
+    const fechaActualLimpia = new Date(anioActual, mesActual, diaActual);
 
-    if (seleccionFecha < fechaActual) {
+    if (seleccionFecha < fechaActualLimpia) {
       return { fechaInvalida: true };
     }
 
@@ -102,6 +114,17 @@ export class ReservarClaseComponent implements OnInit {
     return fecha.toLocaleDateString();
   }
 
+  getAulasDisponibles(fecha: any) {
+    return this.aulasFiltradas.filter((aula) => {
+      for (const reserva of this.reservas) {
+        if (reserva.aula.id === aula.id && reserva.fecha === fecha) {
+          return false; // Aula reservada en la fecha especificada
+        }
+      }
+      return true; // Aula no reservada en la fecha especificada
+    });
+  }
+
   verAulas() {
     this.mostrarElemento = false;
 
@@ -112,13 +135,6 @@ export class ReservarClaseComponent implements OnInit {
     // Realizar el filtrado de las aulas
     const aulasFiltradas = this.aulas.filter((aula) => {
       //retorna true si el aula cumple con las condiciones, false en caso contrario
-
-      // if (
-      //   filtro.fecha &&
-      //   aula.reserva.fecha.seconds !== filtro.fecha.getTime() / 1000
-      // ) {
-      //   return false;
-      // }
 
       if (filtro.fecha && aula.dia !== filtro.fecha.getDay()) {
         return false;
@@ -141,10 +157,6 @@ export class ReservarClaseComponent implements OnInit {
         filtro.ordenadores === 'Si' &&
         aula.ordenadores !== filtro.ordenadores
       ) {
-        return false;
-      }
-
-      if (aula.reserva && aula.reserva.reservada === true) {
         return false;
       }
 
@@ -172,18 +184,25 @@ export class ReservarClaseComponent implements OnInit {
 
     // Hacer algo con las aulas filtradas (por ejemplo, asignarlas a una propiedad del componente)
     this.aulasFiltradas = aulasFiltradas;
+    const aulasDisponiblesFiltradas = this.getAulasDisponibles(
+      this.form.controls['fecha'].value.getTime()
+    );
+    this.aulasDisponiblesFiltradas = aulasDisponiblesFiltradas;console.log(aulasDisponiblesFiltradas);
     this.form.reset();
   }
 
   reservar(aula: Aula) {
     const fechaMilisegundos = this.formValue.fecha.getTime();
-    const fecha = {
-      seconds: Math.floor(fechaMilisegundos / 1000),
-      miliseconds: fechaMilisegundos % 1000,
+    const emailUsuario = this.authService.getEmailUsuario();
+    const reserva: Reservas = {
+      id: '',
+      email: emailUsuario!,
+      fecha: fechaMilisegundos,
+      aula: aula,
     };
 
     this.clasesServices
-      .addReserva(aula, fecha)
+      .addReserva(reserva)
       .then(() => {
         this.snackBar.open('Aula reservada con éxito', '', {
           duration: 3000,
