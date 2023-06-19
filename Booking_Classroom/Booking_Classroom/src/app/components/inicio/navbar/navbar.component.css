@@ -1,17 +1,21 @@
 .barra {
   background-color: #494592;
   color: burlywood;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.example-spacer {
-  flex: 1 1 auto;
-}
 
 .botones {
   background-color: burlywood;
   margin-right: 3%;
   font-size: 75%;
-  width: 15%;
+  width: auto;
   height: 60%;
 }
 
@@ -44,11 +48,43 @@
 }
 
 @keyframes cambio-color {
-  0% { background-color: burlywood; }
-  50% { background-color: white; }
-  100% { background-color: burlywood; }
+  0% {
+    background-color: burlywood;
+  }
+  50% {
+    background-color: white;
+  }
+  100% {
+    background-color: burlywood;
+  }
 }
 
 .usuario {
   margin-top: 2vh;
+  margin-left: 5px;
+}
+
+.left-section {
+  display: flex;
+  align-items: center;
+}
+
+.right-section {
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 600px) {
+  .barra {
+    flex-wrap: wrap;
+  }
+
+  .left-section {
+    margin-bottom: 10px;
+  }
+
+  .right-section {
+    flex-basis: 100%;
+    justify-content: flex-end;
+  }
 }

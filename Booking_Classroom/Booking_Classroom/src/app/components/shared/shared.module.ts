@@ -19,6 +19,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule} from '@angular/material/dialog';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 //Modulos
 
@@ -47,7 +48,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatListModule,
     MatTableModule,
     MatDialogModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatGridListModule
 
   ],
   exports: [
@@ -70,7 +72,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatListModule,
     MatTableModule,
     MatDialogModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatGridListModule
   ],
   providers: [],
 })

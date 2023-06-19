@@ -1,113 +1,123 @@
-<div fxLayout="row" fxLayoutAlign="start stretch" fxFill>
+<div class="box">
   <!-- Columna izquierda -->
-  <div fxLayout="column" fxLayoutAlign="center center" fxFlex="35">
-    <img src="./assets/img/logo2.svg" />
+  <div class="one">
+    <div class="one-content"><img src="./assets/img/logo2.svg" /></div>
   </div>
 
   <!-- Columna derecha -->
-  <div
-    fxLayout="column"
-    fxLayoutAlign="center center"
-    style="background-color: burlywood"
-    fxFlex="auto"
-  >
-    <div>
-      <div>
-        <h1 class="registro">Cambiar contraseña</h1>
+  <div class="two">
+    <div class="two-content">
+      <!-- Contenido de la segunda columna -->
+      <div class="login-wrapper">
+        <div>
+          <h1 class="registro">Cambiar contraseña</h1>
+        </div>
+
+        <!-- Empieza el form -->
+        <div>
+          <form [formGroup]="form" (ngSubmit)="aceptar()" >
+            <div fxLayout="column" fxLayoutAlign="space-between center">
+              <div>
+                <mat-form-field style="width: 100%">
+                  <mat-label>Nueva contraseña</mat-label>
+                  <input
+                    matInput
+                    formControlName="nueva"
+                    [type]="hide ? 'password' : 'text'"
+                  />
+                  <mat-error
+                    *ngIf="form.controls['nueva'].hasError('required')"
+                    >{{ getErrorMessage() }}</mat-error
+                  >
+                  <button
+                    mat-icon-button
+                    matSuffix
+                    (click)="hide = !hide"
+                    [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide"
+                    type="button"
+                  >
+                    <mat-icon>{{
+                      hide ? "visibility_off" : "visibility"
+                    }}</mat-icon>
+                  </button>
+                </mat-form-field>
+              </div>
+
+              <div>
+                <mat-form-field style="width: 100%">
+                  <mat-label>Repetir contraseña</mat-label>
+                  <input
+                    matInput
+                    formControlName="repetir"
+                    [type]="hide ? 'password' : 'text'"
+                  />
+                  <mat-error
+                    *ngIf="form.controls['repetir'].hasError('required')"
+                    >{{ getErrorMessage() }}</mat-error
+                  >
+                  <mat-error
+                    *ngIf="form.controls['repetir'].hasError('matching')"
+                  >
+                    La contraseña debe coincidir.
+                  </mat-error>
+                  <button
+                    mat-icon-button
+                    matSuffix
+                    (click)="hide = !hide"
+                    [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide"
+                    type="button"
+                  >
+                    <mat-icon>{{
+                      hide ? "visibility_off" : "visibility"
+                    }}</mat-icon>
+                  </button>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <!-- Botón Enviar -->
+            <div
+              fxLayout="row"
+              fxLayoutAlign="center center"
+              style="margin-top: 5%"
+            >
+              <div style="margin-right: 2%">
+                <button
+                  style="height: 50px"
+                  mat-raised-button
+                  [disabled]="form.invalid"
+                  [ngStyle]="{
+                    'background-color': form.invalid
+                      ? 'rgb(183, 183, 183)'
+                      : '#494592',
+                    color: form.invalid ? '#d4d4d4' : '#FFFFFF'
+                  }"
+                  type="submit"
+                >
+                  Aceptar
+                </button>
+              </div>
+              <div>
+                <button
+                  mat-raised-button
+                  routerLink="/inicio/principal"
+                  style="
+                    background-color: #494592;
+                    color: #ffffff;
+                    height: 50px;
+                  "
+                  type="button"
+                  (click)="cancelar()"
+                >
+                  Cancelar
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
-
-    <div fxLayout="column" fxLayoutAlign="center center" style="width: 100%">
-      <form [formGroup]="form" (ngSubmit)="aceptar()" style="width: 60%">
-        <div fxLayout="column" fxLayoutAlign="space-between center">
-          <div>
-            <mat-form-field style="width: 100%">
-              <mat-label>Nueva contraseña</mat-label>
-              <input
-                matInput
-                formControlName="nueva"
-                [type]="hide ? 'password' : 'text'"
-              />
-              <mat-error *ngIf="form.controls['nueva'].hasError('required')">{{
-                getErrorMessage()
-              }}</mat-error>
-              <button
-                mat-icon-button
-                matSuffix
-                (click)="hide = !hide"
-                [attr.aria-label]="'Hide password'"
-                [attr.aria-pressed]="hide"
-                type="button"
-              >
-                <mat-icon>{{
-                  hide ? "visibility_off" : "visibility"
-                }}</mat-icon>
-              </button>
-            </mat-form-field>
-          </div>
-
-          <div>
-            <mat-form-field style="width: 100%">
-              <mat-label>Repetir contraseña</mat-label>
-              <input
-                matInput
-                formControlName="repetir"
-                [type]="hide ? 'password' : 'text'"
-              />
-              <mat-error
-                *ngIf="form.controls['repetir'].hasError('required')"
-                >{{ getErrorMessage() }}</mat-error
-              >
-              <mat-error *ngIf="form.controls['repetir'].hasError('matching')">
-                La contraseña debe coincidir.
-              </mat-error>
-              <button
-                mat-icon-button
-                matSuffix
-                (click)="hide = !hide"
-                [attr.aria-label]="'Hide password'"
-                [attr.aria-pressed]="hide"
-                type="button"
-              >
-                <mat-icon>{{
-                  hide ? "visibility_off" : "visibility"
-                }}</mat-icon>
-              </button>
-            </mat-form-field>
-          </div>
-        </div>
-
-        <!-- Botón Enviar -->
-        <div fxLayout="row" fxLayoutAlign="center center" style="margin-top: 5%;">
-          <div style="margin-right: 2%">
-            <button
-              style="height: 50px"
-              mat-raised-button
-              [disabled]="form.invalid"
-              [ngStyle]="{
-                'background-color': form.invalid
-                  ? 'rgb(183, 183, 183)'
-                  : '#494592',
-                color: form.invalid ? '#d4d4d4' : '#FFFFFF'
-              }"
-              type="submit"
-            >
-              Aceptar
-            </button>
-          </div>
-          <div>
-            <button
-              mat-raised-button
-              routerLink="/inicio/principal"
-              style="background-color: #494592; color: #ffffff; height: 50px"
-              type="button"
-              (click)="cancelar()"
-            >
-              Cancelar
-            </button>
-          </div>
-        </div>
-      </form>
     </div>
   </div>
 </div>

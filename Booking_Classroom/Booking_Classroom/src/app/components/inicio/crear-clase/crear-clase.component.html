@@ -1,255 +1,250 @@
-<div fxLayout="row" fxLayoutAlign="start stretch" fxFill>
+<div class="box">
   <!-- Columna izquierda -->
-  <div
-    fxLayout="column"
-    fxLayoutAlign="center center"
-    style="background-color: burlywood"
-    fxFlex="auto"
-  >
-    <div>
-      <div>
-        <h1 class="registro">Crear nueva clase</h1>
+  <div class="one" style="margin-top: 100px;">
+    <div class="one-content">
+      <div class="login-wrapper">
+        <div>
+          <h1 class="registro">Crear nueva clase</h1>
+        </div>
+
+        <div>
+          <!-- Contenido del formulario -->
+          <form [formGroup]="form" class="login-wrapper">
+            <!-- Campos del formulario -->
+            <div>
+              <mat-form-field>
+                <mat-label>Aula | Ejemplo: A01</mat-label>
+                <input matInput formControlName="aula" />
+                <mat-hint align="start">Letra y 2 dígitos</mat-hint>
+                <mat-error *ngIf="form.controls['aula'].hasError('required')">
+                  {{ getErrorMessage() }}
+                </mat-error>
+                <mat-error *ngIf="form.controls['aula'].hasError('pattern')">
+                  {{ "Letra en mayúscula + 2 digitos" }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div>
+              <mat-form-field>
+                <mat-label>Día</mat-label>
+                <mat-hint align="start">Día de la semana</mat-hint>
+                <mat-select formControlName="dia">
+                  <mat-option *ngFor="let dia of dias" value="{{ dia.en }}">
+                    {{ dia.es }}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="form.controls['dia'].hasError('required')">
+                  {{ getErrorMessage() }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div>
+              <mat-form-field>
+                <mat-label>Aforo</mat-label>
+                <input matInput formControlName="aforo" type="number" />
+                <mat-hint align="start">Entre 0 y 50</mat-hint>
+                <mat-error *ngIf="form.controls['aforo'].hasError('required')">
+                  {{ getErrorMessage() }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div>
+              <mat-form-field>
+                <mat-label>Inicio</mat-label>
+                <mat-hint align="start">Hora inicio</mat-hint>
+                <mat-select formControlName="hora_inicial">
+                  <mat-option *ngFor="let hora of horas" value="{{ hora }}">
+                    {{ hora | number : "2.0" }}:00
+                  </mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="form.controls['hora_inicial'].hasError('required')"
+                >
+                  {{ getErrorMessage() }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div>
+              <mat-form-field>
+                <mat-label>Fin</mat-label>
+                <mat-hint align="start">Hora fin</mat-hint>
+                <mat-select formControlName="hora_final">
+                  <mat-option *ngFor="let hora of horas" value="{{ hora }}">
+                    {{ hora | number : "2.0" }}:00
+                  </mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="form.controls['hora_inicial'].hasError('required')"
+                >
+                  {{ getErrorMessage() }}
+                </mat-error>
+                <mat-error
+                  *ngIf="form.controls['hora_final'].hasError('horaFinalMenor')"
+                >
+                  {{ "Debe ser posterior a la inicial" }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div>
+              <mat-form-field>
+                <mat-label>¿Ordenadores?</mat-label>
+                <mat-hint align="start">¿Ordenadores?</mat-hint>
+                <mat-select formControlName="ordenadores">
+                  <mat-option value="Si">Sí</mat-option>
+                  <mat-option value="No">No</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div>
+              <mat-form-field>
+                <mat-label>¿Proyector?</mat-label>
+                <mat-hint align="start">¿Proyector?</mat-hint>
+                <mat-select formControlName="proyector">
+                  <mat-option value="Si">Sí</mat-option>
+                  <mat-option value="No">No</mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="form.controls['proyector'].hasError('required')"
+                >
+                  {{ getErrorMessage() }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <br />
+
+            <!-- Botón Enviar -->
+            <div fxLayout="row" fxLayoutAlign="space-evenly center">
+              <div>
+                <button
+                  style="height: 50px; margin-right: 10px; margin-bottom: 10px;"
+                  mat-raised-button
+                  [disabled]="form.invalid"
+                  [ngStyle]="{
+                    'background-color': form.invalid
+                      ? 'rgb(183, 183, 183)'
+                      : '#494592',
+                    color: form.invalid ? '#d4d4d4' : '#FFFFFF'
+                  }"
+                  type="button"
+                  (click)="onCrear()"
+                >
+                  Crear
+                </button>
+              </div>
+              <div>
+                <button
+                  mat-raised-button
+                  routerLink="/inicio/principal"
+                  style="
+                    background-color: #494592;
+                    color: #ffffff;
+                    height: 50px;
+                    margin-left: 10px;
+                    margin-bottom: 10px;
+                  "
+                  type="button"
+                  (click)="onVolver()"
+                >
+                  Volver
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
-
-    <div fxLayout="column" fxLayoutAlign="center center" style="width: 100%">
-      <!-- Contenido del formulario -->
-      <form [formGroup]="form"  style="width: 60%">
-        <!-- Campos del formulario -->
-        <div>
-          <mat-form-field style="width: 100%">
-            <mat-label>Aula | Ejemplo: A01</mat-label>
-            <input matInput formControlName="aula" />
-            <mat-hint align="start">Letra y 2 dígitos</mat-hint>
-            <mat-error *ngIf="form.controls['aula'].hasError('required')">
-              {{ getErrorMessage() }}
-            </mat-error>
-            <mat-error *ngIf="form.controls['aula'].hasError('pattern')">
-              {{'Letra en mayúscula + 2 digitos'}}
-            </mat-error>
-          </mat-form-field>
-        </div>
-
-        <div>
-          <mat-form-field>
-            <mat-label>Día</mat-label>
-            <mat-hint align="start">Día de la semana</mat-hint>
-            <mat-select formControlName="dia">
-              <mat-option *ngFor="let dia of dias" value="{{ dia.en }}">
-                {{ dia.es }}
-              </mat-option>
-            </mat-select>
-            <mat-error
-              *ngIf="form.controls['dia'].hasError('required')"
-            >
-              {{ getErrorMessage() }}
-            </mat-error>
-          </mat-form-field>
-        </div>
-
-        <div>
-          <mat-form-field style="width: 100%">
-            <mat-label>Aforo</mat-label>
-            <input matInput formControlName="aforo" type="number" />
-            <mat-hint align="start">Entre 0 y 50</mat-hint>
-            <mat-error *ngIf="form.controls['aforo'].hasError('required')">
-              {{ getErrorMessage() }}
-            </mat-error>
-          </mat-form-field>
-        </div>
-
-        <div fxLayout="row" fxLayoutAlign="space-between center">
-          <div class="two-fields">
-            <mat-form-field>
-              <mat-label>Inicio</mat-label>
-              <mat-hint align="start">Hora inicio</mat-hint>
-              <mat-select formControlName="hora_inicial">
-                <mat-option *ngFor="let hora of horas" value="{{ hora }}">
-                  {{ hora | number : "2.0" }}:00
-                </mat-option>
-              </mat-select>
-              <mat-error
-                *ngIf="form.controls['hora_inicial'].hasError('required')"
-              >
-                {{ getErrorMessage() }}
-              </mat-error>
-            </mat-form-field>
-
-            <mat-form-field class="segundo">
-              <mat-label>Fin</mat-label>
-              <mat-hint align="start">Hora fin</mat-hint>
-              <mat-select formControlName="hora_final">
-                <mat-option *ngFor="let hora of horas" value="{{ hora }}">
-                  {{ hora | number : "2.0" }}:00
-                </mat-option>
-              </mat-select>
-              <mat-error
-                *ngIf="form.controls['hora_inicial'].hasError('required')"
-              >
-                {{ getErrorMessage() }}
-              </mat-error>
-              <mat-error
-            *ngIf="form.controls['hora_final'].hasError('horaFinalMenor')"
-          >
-            {{ "Debe ser posterior a la inicial" }}
-          </mat-error>
-            </mat-form-field>
-          </div>
-        </div>
-
-        <div fxLayout="row" fxLayoutAlign="space-between center">
-          <div class="two-fields">
-            <mat-form-field>
-              <mat-label>¿Ordenadores?</mat-label>
-              <mat-hint align="start">¿Ordenadores?</mat-hint>
-              <mat-select formControlName="ordenadores">
-                <mat-option value="Si">Sí</mat-option>
-                <mat-option value="No">No</mat-option>
-              </mat-select>
-            </mat-form-field>
-
-            <mat-form-field class="segundo">
-              <mat-label>¿Proyector?</mat-label>
-              <mat-hint align="start">¿Proyector?</mat-hint>
-              <mat-select formControlName="proyector">
-                <mat-option value="Si">Sí</mat-option>
-                <mat-option value="No">No</mat-option>
-              </mat-select>
-              <mat-error
-                *ngIf="form.controls['proyector'].hasError('required')"
-              >
-                {{ getErrorMessage() }}
-              </mat-error>
-            </mat-form-field>
-          </div>
-        </div>
-
-        <br />
-
-        <!-- Botón Enviar -->
-        <div fxLayout="row" fxLayoutAlign="space-evenly center">
-          <div>
-            <button
-              style="height: 50px"
-              mat-raised-button
-              [disabled]="form.invalid"
-              [ngStyle]="{
-                'background-color': form.invalid
-                  ? 'rgb(183, 183, 183)'
-                  : '#494592',
-                color: form.invalid ? '#d4d4d4' : '#FFFFFF'
-              }"
-              type="button"
-              (click)="onCrear()"
-            >
-              Crear
-            </button>
-          </div>
-          <div>
-            <button
-              mat-raised-button
-              routerLink="/inicio/principal"
-              style="background-color: #494592; color: #ffffff; height: 50px"
-              type="button"
-              (click)="onVolver()"
-            >
-              Volver
-            </button>
-          </div>
-        </div>
-      </form>
     </div>
   </div>
 
   <!-- Columna derecha -->
-  <div
-    fxLayout="column"
-    fxLayoutAlign="start center"
-    fxFlex="65"
-    style="margin-top: 10vh"
-  >
-    <div class="tabla-container">
-      <div class="titulo-container">
-        <h1>Clases</h1>
+  <div class="two">
+    <div class="two-content">
+      <div class="tabla-container" style="margin-top: -100px;">
+        <div class="titulo-container">
+          <h1>Clases</h1>
+        </div>
+
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+          <!-- Columna Aula -->
+          <ng-container matColumnDef="aula">
+            <th mat-header-cell *matHeaderCellDef>Aula</th>
+            <td mat-cell *matCellDef="let aula">{{ aula.aula }}</td>
+          </ng-container>
+
+          <!-- Columna Día -->
+          <ng-container matColumnDef="dia">
+            <th mat-header-cell *matHeaderCellDef>Dia</th>
+            <td mat-cell *matCellDef="let aula">
+              {{ obtenerNombreDia(aula.dia) }}
+            </td>
+          </ng-container>
+
+          <!-- Columna Aforo -->
+          <ng-container matColumnDef="aforo">
+            <th mat-header-cell *matHeaderCellDef>Aforo</th>
+            <td mat-cell *matCellDef="let aula">{{ aula.aforo }}</td>
+          </ng-container>
+
+          <!-- Columna Hora Inicial -->
+          <ng-container matColumnDef="horaInicial">
+            <th mat-header-cell *matHeaderCellDef>Hora Inicial</th>
+            <td mat-cell *matCellDef="let aula">
+              {{ aula.hora_inicial | number : "2.0" }}:00
+            </td>
+          </ng-container>
+
+          <!-- Columna Hora Final -->
+          <ng-container matColumnDef="horaFinal">
+            <th mat-header-cell *matHeaderCellDef>Hora Final</th>
+            <td mat-cell *matCellDef="let aula">
+              {{ aula.hora_final | number : "2.0" }}:00
+            </td>
+          </ng-container>
+
+          <!-- Columna Ordenadores -->
+          <ng-container matColumnDef="ordenadores">
+            <th mat-header-cell *matHeaderCellDef>Ordenadores</th>
+            <td mat-cell *matCellDef="let aula">{{ aula.ordenadores }}</td>
+          </ng-container>
+
+          <!-- Columna Proyector -->
+          <ng-container matColumnDef="proyector">
+            <th mat-header-cell *matHeaderCellDef>Proyector</th>
+            <td mat-cell *matCellDef="let aula">{{ aula.proyector }}</td>
+          </ng-container>
+
+          <!-- Columna Acciones -->
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let aula">
+              <button mat-button color="primary" (click)="borrarClase(aula)">
+                <mat-icon class="login"
+                  ><span class="material-symbols-outlined">
+                    delete
+                  </span></mat-icon
+                >
+                Borrar Clase
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+          <tr mat-row *matRowDef="let row; columns: columnas"></tr>
+        </table>
+        <mat-paginator
+          #paginator
+          [pageSize]="5"
+          [pageSizeOptions]="[5, 10, 15]"
+          showFirstLastButtons
+        >
+        </mat-paginator>
       </div>
-
-      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-        <!-- Columna Aula -->
-        <ng-container matColumnDef="aula">
-          <th mat-header-cell *matHeaderCellDef>Aula</th>
-          <td mat-cell *matCellDef="let aula">{{ aula.aula }}</td>
-        </ng-container>
-
-        <!-- Columna Día -->
-        <ng-container matColumnDef="dia">
-          <th mat-header-cell *matHeaderCellDef>Dia</th>
-          <td mat-cell *matCellDef="let aula">
-            {{ obtenerNombreDia(aula.dia) }}
-          </td>
-        </ng-container>
-
-        <!-- Columna Aforo -->
-        <ng-container matColumnDef="aforo">
-          <th mat-header-cell *matHeaderCellDef>Aforo</th>
-          <td mat-cell *matCellDef="let aula">{{ aula.aforo }}</td>
-        </ng-container>
-
-        <!-- Columna Hora Inicial -->
-        <ng-container matColumnDef="horaInicial">
-          <th mat-header-cell *matHeaderCellDef>Hora Inicial</th>
-          <td mat-cell *matCellDef="let aula">
-            {{ aula.hora_inicial | number : "2.0" }}:00
-          </td>
-        </ng-container>
-
-        <!-- Columna Hora Final -->
-        <ng-container matColumnDef="horaFinal">
-          <th mat-header-cell *matHeaderCellDef>Hora Final</th>
-          <td mat-cell *matCellDef="let aula">
-            {{ aula.hora_final | number : "2.0" }}:00
-          </td>
-        </ng-container>
-
-        <!-- Columna Ordenadores -->
-        <ng-container matColumnDef="ordenadores">
-          <th mat-header-cell *matHeaderCellDef>Ordenadores</th>
-          <td mat-cell *matCellDef="let aula">
-            {{ aula.ordenadores }}
-          </td>
-        </ng-container>
-
-        <!-- Columna Proyector -->
-        <ng-container matColumnDef="proyector">
-          <th mat-header-cell *matHeaderCellDef>Proyector</th>
-          <td mat-cell *matCellDef="let aula">
-            {{ aula.proyector }}
-          </td>
-        </ng-container>
-
-        <!-- Columna Acciones -->
-        <ng-container matColumnDef="acciones">
-          <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let aula">
-            <button mat-button color="primary" (click)="borrarClase(aula)">
-              <mat-icon class="login"
-                ><span class="material-symbols-outlined">
-                  delete
-                </span></mat-icon
-              >
-              Borrar Clase
-            </button>
-          </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="columnas"></tr>
-        <tr mat-row *matRowDef="let row; columns: columnas"></tr>
-      </table>
-      <mat-paginator
-      #paginator
-      [pageSize]="5"
-      [pageSizeOptions]="[5, 10, 15]"
-      showFirstLastButtons>
-    </mat-paginator>
     </div>
   </div>
 </div>

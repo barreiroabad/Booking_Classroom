@@ -1,13 +1,12 @@
 .tabla-container {
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  height: 50vh;
-  width: 80vw;
+  margin: 0 auto; /* Centra la tabla horizontalmente */
+  padding: 0 20px; /* Agrega un margen izquierdo y derecho de 20px */
 }
 
 .titulo-container {
-  margin-bottom: 20px;
+  margin-top: 20px;
 }
+

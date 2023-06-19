@@ -1,9 +1,75 @@
-img {
-  width: auto;
-  display: block;
-}
 
 .registro {
   color: #494592;
   font-size: 20pt;
+}
+
+.box {
+  display: flex;
+}
+
+.one {
+  flex: 1;
+  background-color: white;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.one-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.one img {
+  max-width: 100%;
+  height: auto;
+}
+
+.two {
+  flex: 2;
+  background-color: burlywood;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.two-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login {
+  color: #494592;
+  font-weight: bold;
+  font-size: 20pt;
+  text-align: center;
+  margin-top: 10px;
+}
+
+a {
+  color: #494592;
+  text-decoration: none;
+}
+
+a:visited {
+  color: #494592;
+}
+a:hover,
+a:focus,
+a:active {
+  color: #494592;
+}
+mat-grid-tile {
+  background: lightblue;
 }

@@ -1,29 +1,40 @@
-<div class="contenedor" fxLayout="column" fxLayoutAlign="space-around center">
-  <button
-    routerLink="/inicio/mis-reservas"
-    mat-button
-    style="color: #494592"
-    class="botones"
-  >
-    Mis Reservas
-  </button>
-  <button
-    routerLink="/inicio/reservar-clase"
-    mat-button
-    style="color: #494592"
-    class="botones"
-  >
-    Reservar Clase
-  </button>
-  <br />
-  <button
-    *ngIf="mostrarBoton"
-    routerLink="/inicio/crear-clase"
-    mat-button
-    style="color: burlywood"
-    class="botones2"
-    (click)="cambiarValor()"
-  >
-    Administrar Clases
-  </button>
+<div class="contenedor">
+  <div class="centrado">
+    <div class="boton-wrapper">
+      <button
+        routerLink="/inicio/mis-reservas"
+        mat-button
+        style="color: #494592"
+        class="botones"
+      >
+        Mis Reservas
+      </button>
+    </div>
+
+    <div class="boton-wrapper">
+      <button
+        routerLink="/inicio/reservar-clase"
+        mat-button
+        style="color: #494592"
+        class="botones"
+      >
+        Reservar Clase
+      </button>
+      <br />
+    </div>
+
+    <div class="boton-wrapper">
+      <button
+        *ngIf="mostrarBoton"
+        routerLink="/inicio/crear-clase"
+        mat-button
+        style="color: burlywood"
+        class="botones2"
+        (click)="cambiarValor()"
+
+      >
+        Administrar Clases
+      </button>
+    </div>
+  </div>
 </div>

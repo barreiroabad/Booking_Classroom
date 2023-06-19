@@ -1,31 +1,33 @@
 <mat-toolbar *ngIf="mostrarNavBar" class="barra">
-  <button
-    routerLink="/inicio/principal"
-    mat-icon-button
-    class="boton-pequeño"
-    style="margin-right: 2%"
-  >
-    <mat-icon>home</mat-icon>
-  </button>
-
-  <div class="usuario">
-    <p>¡Hola, {{ usuario }}!</p>
-  </div>
-  <span class="example-spacer"></span>
-  <button
-    routerLink="/inicio/configuracion"
-    routerLinkActive="active"
-    mat-button
-    style="color: #494592"
-    class="botones"
-  >
-    Usuarios
-  </button>
-  <button (click)="salir()" mat-icon-button class="boton-pequeño">
-    <mat-icon
-      ><span class="material-symbols-outlined">
-        power_settings_new
-      </span></mat-icon
+  <div class="left-section">
+    <button
+      routerLink="/inicio/principal"
+      mat-icon-button
+      class="boton-pequeño"
     >
-  </button>
+      <mat-icon>home</mat-icon>
+    </button>
+    <div class="usuario">
+      <p>¡Hola, {{ usuario }}!</p>
+    </div>
+  </div>
+
+  <div class="right-section">
+    <button
+      routerLink="/inicio/configuracion"
+      routerLinkActive="active"
+      mat-button
+      style="color: #494592"
+      class="botones"
+    >
+      Usuarios
+    </button>
+    <button (click)="salir()" mat-icon-button class="boton-pequeño">
+      <mat-icon
+        ><span class="material-symbols-outlined"
+          >power_settings_new</span
+        ></mat-icon
+      >
+    </button>
+  </div>
 </mat-toolbar>

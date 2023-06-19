@@ -16,10 +16,10 @@ export class AppComponent implements OnInit {
     this.checkAuthState();
 
     // Escuchar los cambios en el estado de autenticación en tiempo real
-    this.authService.getEstadoConexion().subscribe(user => {
+    this.authService.getEstadoConexion().subscribe((user) => {
       if (!user) {
         // El usuario no está autenticado, redirigir a la página de inicio de sesión
-        //this.router.navigate(['/login']);
+        this.router.navigate(['/login']);
       }
     });
   }
@@ -29,8 +29,7 @@ export class AppComponent implements OnInit {
     const user = this.authService.getUsuario();
     if (!user) {
       // El usuario no está autenticado, redirigir a la página de inicio de sesión
-     // this.router.navigate(['/login']);
+      this.router.navigate(['/login']);
     }
   }
 }
-

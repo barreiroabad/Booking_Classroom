@@ -1,25 +1,69 @@
-img {
-  width: auto;
-  display: block;
+.box {
+  display: flex;
+}
+
+.one {
+  flex: 2;
+  background-color: #494592;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.one-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.one img {
+  max-width: 100%;
+  height: auto;
+}
+
+.two {
+  flex: 1;
+  background-color: burlywood;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.two-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .login {
   color: #494592;
   font-weight: bold;
   font-size: 20pt;
+  text-align: center;
+  margin-top: 10px;
 }
 
 a {
-  color: #494592; /* Color inicial del enlace */
-  text-decoration: none; /* Evita la subrayado del enlace */
+  color: #494592;
+  text-decoration: none;
 }
 
 a:visited {
-  color: #494592; /* Color del enlace visitado */
+  color: #494592;
 }
-
 a:hover,
 a:focus,
 a:active {
-  color: #494592; /* Color del enlace al pasar el cursor, al tener el foco o al hacer clic */
+  color: #494592;
+}
+mat-grid-tile {
+  background: lightblue;
 }

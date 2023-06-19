@@ -1,160 +1,178 @@
-<div fxLayout="row" fxLayoutAlign="start stretch" fxFill>
+<div class="box">
   <!-- Columna izquierda -->
-  <div fxLayout="column" fxLayoutAlign="start center" fxFlex="35">
-    <h1 class="registro">Haz tu reserva!</h1>
+  <div class="one">
+    <div class="one-content">
+      <div class="login-wrapper">
+        <div>
+          <h1 class="registro">Haz tu reserva!</h1>
+        </div>
 
-    <form [formGroup]="form">
-      <div>
-        <mat-form-field style="width: 100%">
-          <mat-label>Elige una fecha</mat-label>
-          <input matInput [matDatepicker]="picker" formControlName="fecha" />
-          <mat-hint>MM/DD/YYYY</mat-hint>
-          <mat-datepicker-toggle
-            matIconSuffix
-            [for]="picker"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-          <mat-error *ngIf="form.controls['fecha'].hasError('required')">{{
-            getErrorMessage()
-          }}</mat-error>
-          <mat-error *ngIf="form.get('fecha')?.hasError('fechaInvalida')">{{
-            "No se puede seleccionar una fecha anterior a la fecha actual."
-          }}</mat-error>
-        </mat-form-field>
+        <div>
+          <form [formGroup]="form">
+            <div>
+              <mat-form-field style="width: 100%">
+                <mat-label>Elige una fecha</mat-label>
+                <input
+                  matInput
+                  [matDatepicker]="picker"
+                  formControlName="fecha"
+                />
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle
+                  matIconSuffix
+                  [for]="picker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error
+                  *ngIf="form.controls['fecha'].hasError('required')"
+                  >{{ getErrorMessage() }}</mat-error
+                >
+                <mat-error
+                  *ngIf="form.get('fecha')?.hasError('fechaInvalida')"
+                  >{{
+                    "Fecha anterior a la fecha actual."
+                  }}</mat-error
+                >
+              </mat-form-field>
+            </div>
+
+            <div>
+              <mat-form-field style="width: 100%">
+                <mat-label>Hora de inicio</mat-label>
+                <mat-select formControlName="hora_inicial">
+                  <mat-option *ngFor="let hora of horas" value="{{ hora }}">
+                    {{ hora | number : "2.0" }}:00
+                  </mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="form.controls['hora_inicial'].hasError('required')"
+                  >{{ getErrorMessage() }}</mat-error
+                >
+                <mat-error
+                  *ngIf="form.controls['hora_final'].hasError('horaFinalMenor')"
+                >
+                  {{ "Debe ser posterior a la inicial" }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div>
+              <mat-form-field style="width: 100%">
+                <mat-label>Hora de fin</mat-label>
+                <mat-select formControlName="hora_final">
+                  <mat-option *ngFor="let hora of horas" value="{{ hora }}">
+                    {{ hora | number : "2.0" }}:00
+                  </mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="form.controls['hora_final'].hasError('required')"
+                  >{{ getErrorMessage() }}</mat-error
+                >
+                <mat-error
+                  *ngIf="form.controls['hora_final'].hasError('horaFinalMenor')"
+                >
+                  {{ "Debe ser posterior a la inicial" }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div>
+              <mat-form-field style="width: 100%">
+                <mat-label>Aforo</mat-label>
+                <input
+                  matInput
+                  formControlName="aforo"
+                  type="number"
+                  min="0"
+                  max="50"
+                />
+              </mat-form-field>
+            </div>
+
+            <div>
+              <mat-form-field style="width: 100%">
+                <mat-label>¿Necesitas ordenadores?</mat-label>
+                <mat-select formControlName="ordenadores">
+                  <mat-option value="Si">Sí</mat-option>
+                  <mat-option value="No">No</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div>
+              <mat-form-field style="width: 100%">
+                <mat-label>¿Necesitas proyector?</mat-label>
+                <mat-select formControlName="proyector">
+                  <mat-option value="Si">Sí</mat-option>
+                  <mat-option value="No">No</mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="form.controls['proyector'].hasError('required')"
+                  >{{ getErrorMessage() }}</mat-error
+                >
+              </mat-form-field>
+            </div>
+
+            <button
+              mat-stroked-button
+              color="primary"
+              type="button"
+              (click)="verAulas()"
+              [disabled]="form.invalid"
+            >
+              <span>Ver aulas disponibles</span>
+            </button>
+          </form>
+        </div>
       </div>
-
-      <div>
-        <mat-form-field style="width: 100%">
-          <mat-label>Hora de inicio</mat-label>
-          <mat-select formControlName="hora_inicial">
-            <mat-option *ngFor="let hora of horas" value="{{ hora }}">
-              {{ hora | number : "2.0" }}:00
-            </mat-option>
-          </mat-select>
-          <mat-error
-            *ngIf="form.controls['hora_inicial'].hasError('required')"
-            >{{ getErrorMessage() }}</mat-error
-          >
-          <mat-error
-            *ngIf="form.controls['hora_final'].hasError('horaFinalMenor')"
-          >
-            {{ "Debe ser posterior a la inicial" }}
-          </mat-error>
-        </mat-form-field>
-      </div>
-
-      <div>
-        <mat-form-field style="width: 100%">
-          <mat-label>Hora de fin</mat-label>
-          <mat-select formControlName="hora_final">
-            <mat-option *ngFor="let hora of horas" value="{{ hora }}">
-              {{ hora | number : "2.0" }}:00
-            </mat-option>
-          </mat-select>
-          <mat-error *ngIf="form.controls['hora_final'].hasError('required')">{{
-            getErrorMessage()
-          }}</mat-error>
-          <mat-error
-            *ngIf="form.controls['hora_final'].hasError('horaFinalMenor')"
-          >
-            {{ "Debe ser posterior a la inicial" }}
-          </mat-error>
-        </mat-form-field>
-      </div>
-
-      <div>
-        <mat-form-field style="width: 100%">
-          <mat-label>Aforo</mat-label>
-          <input
-            matInput
-            formControlName="aforo"
-            type="number"
-            min="0"
-            max="50"
-          />
-        </mat-form-field>
-      </div>
-
-      <div>
-        <mat-form-field style="width: 100%">
-          <mat-label>¿Necesitas ordenadores?</mat-label>
-          <mat-select formControlName="ordenadores">
-            <mat-option value="Si">Sí</mat-option>
-            <mat-option value="No">No</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-
-      <div>
-        <mat-form-field style="width: 100%">
-          <mat-label>¿Necesitas proyector?</mat-label>
-          <mat-select formControlName="proyector">
-            <mat-option value="Si">Sí</mat-option>
-            <mat-option value="No">No</mat-option>
-          </mat-select>
-          <mat-error *ngIf="form.controls['proyector'].hasError('required')">{{
-            getErrorMessage()
-          }}</mat-error>
-        </mat-form-field>
-      </div>
-
-      <button
-        mat-stroked-button
-        color="primary"
-        type="button"
-        (click)="verAulas()"
-        [disabled]="form.invalid"
-      >
-        <span>Ver aulas disponibles</span>
-      </button>
-    </form>
+    </div>
   </div>
 
   <!-- Columna derecha -->
-  <div
-    fxLayout="column"
-    fxLayoutAlign="center center"
-    style="background-color: burlywood"
-    fxFlex="auto"
-  >
-    <div *ngIf="mostrarElemento">
-      <h1>¡Hola! ¿Aún no has reservado ningún espacio?</h1>
-      <p>
-        Si deseas reservar un espacio, consulta la disponibilidad a través del
-        formulario de la izquierda.
-      </p>
-    </div>
+  <div class="two">
+    <div class="two-content" style="margin-top: 100px; margin-bottom: 10px;">
+      <!-- Contenido de la segunda columna -->
+      <div class="login-wrapper">
+        <div *ngIf="mostrarElemento">
+          <h1>¡Hola! ¿Aún no has reservado ningún espacio?</h1>
+          <p>
+            Si deseas reservar un espacio, consulta la disponibilidad a través
+            del formulario de la izquierda.
+          </p>
+        </div>
 
-    <div *ngIf="!mostrarElemento">
-      <div fxLayout="column" fxLayoutAlign="center " fxLayoutGap="10px">
-        <mat-card
-          *ngFor="let aula of aulasDisponiblesFiltradas"
-          style="width: 500px; height: 160px"
-        >
-          <mat-list>
-            <mat-list-item style="width: 500px; height: 160px">
-              <mat-card>
-                <mat-card-header>
-                  <mat-card-title>Aula: {{ aula.aula }} </mat-card-title>
-                </mat-card-header>
-                <mat-card-content>
-                  Hora inicial: {{ aula.hora_inicial | number : "2.0" }}:00 |
-                  Hora final: {{ aula.hora_final | number : "2.0" }}:00
-                </mat-card-content>
-                <mat-card-actions align="start">
-                  <button
-                    mat-stroked-button
-                    color="primary"
-                    type="button"
-                    (click)="reservar(aula)"
-                  >
-                    Reservar
-                  </button>
-                </mat-card-actions>
-              </mat-card>
-            </mat-list-item>
-          </mat-list>
-        </mat-card>
+        <div *ngIf="!mostrarElemento">
+          <div fxLayout="column" fxLayoutAlign="center " fxLayoutGap="10px">
+            <mat-card
+              *ngFor="let aula of aulasDisponiblesFiltradas"
+              style="width: 500px; height: 160px"
+            >
+              <mat-list>
+                <mat-list-item style="width: 500px; height: 160px">
+                  <mat-card>
+                    <mat-card-header>
+                      <mat-card-title>Aula: {{ aula.aula }} </mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                      Hora inicial: {{ aula.hora_inicial | number : "2.0" }}:00
+                      | Hora final: {{ aula.hora_final | number : "2.0" }}:00
+                    </mat-card-content>
+                    <mat-card-actions align="start">
+                      <button
+                        mat-stroked-button
+                        color="primary"
+                        type="button"
+                        (click)="reservar(aula)"
+                      >
+                        Reservar
+                      </button>
+                    </mat-card-actions>
+                  </mat-card>
+                </mat-list-item>
+              </mat-list>
+            </mat-card>
+          </div>
+        </div>
       </div>
     </div>
   </div>

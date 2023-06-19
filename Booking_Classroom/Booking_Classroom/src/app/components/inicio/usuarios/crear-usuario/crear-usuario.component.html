@@ -1,119 +1,122 @@
-<div fxLayout="row" fxLayoutAlign="start stretch" fxFill>
+<div class="box">
   <!-- Columna izquierda -->
-  <div
-    fxLayout="column"
-    fxLayoutAlign="center center"
-    style="background-color: #494592"
-    fxFlex="35"
-  >
-    <img src="./assets/img/logo.svg" />
+  <div class="one">
+    <div class="one-content"><img src="./assets/img/logo.svg" /></div>
   </div>
 
   <!-- Columna derecha -->
-  <div
-    fxLayout="column"
-    fxLayoutAlign="center center"
-    style="background-color: burlywood"
-    fxFlex="auto"
-  >
-    <div>
-      <mat-icon class="registro">app_registration</mat-icon>
-    </div>
-    <div>
-      <div>
-        <h1 class="registro">Registro</h1>
+  <div class="two">
+    <div class="two-content">
+      <!-- Contenido de la segunda columna -->
+      <div class="login-wrapper">
+        <div>
+          <mat-icon class="registro">app_registration</mat-icon>
+        </div>
+        <div>
+          <h1 class="registro">Registro</h1>
+        </div>
+
+        <!-- Empieza el form -->
+        <div>
+          <form [formGroup]="form" (ngSubmit)="onEntrar()" >
+            <div>
+              <mat-form-field style="width: 100%">
+                <mat-label>Nombre</mat-label>
+                <input matInput formControlName="nombre" />
+                <mat-error
+                  *ngIf="form.controls['nombre'].hasError('required')"
+                  >{{ getErrorMessage() }}</mat-error
+                >
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field style="width: 100%">
+                <mat-label>Apellidos</mat-label>
+                <input matInput formControlName="apellidos" />
+                <mat-error
+                  *ngIf="form.controls['apellidos'].hasError('required')"
+                  >{{ getErrorMessage() }}</mat-error
+                >
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field style="width: 100%">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="email" required="true"/>
+                <mat-error
+                  *ngIf="form.controls['email'].hasError('required')"
+                  >{{ getErrorMessage() }}</mat-error
+                >
+                <mat-error *ngIf="form.controls['email'].hasError('email')">{{
+                  getErrorMessageEmail()
+                }}</mat-error>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field style="width: 100%">
+                <mat-label>Contraseña</mat-label>
+                <input
+                  matInput
+                  formControlName="password"
+                  [type]="hide ? 'password' : 'text'"
+                />
+                <button
+                  mat-icon-button
+                  matSuffix
+                  (click)="hide = !hide"
+                  [attr.aria-label]="'Hide password'"
+                  [attr.aria-pressed]="hide"
+                  type="button"
+                >
+                  <mat-icon>{{
+                    hide ? "visibility_off" : "visibility"
+                  }}</mat-icon>
+                </button>
+                <mat-error
+                  *ngIf="form.controls['password'].hasError('required')"
+                  >{{ getErrorMessage() }}</mat-error
+                >
+              </mat-form-field>
+            </div>
+            <br />
+
+            <!-- Botón Enviar -->
+            <div fxLayout="row" fxLayoutAlign="space-evenly center">
+              <div>
+                <button
+                  style="height: 50px"
+                  mat-raised-button
+                  [disabled]="form.invalid"
+                  [ngStyle]="{
+                    'background-color': form.invalid
+                      ? 'rgb(183, 183, 183)'
+                      : '#494592',
+                    color: form.invalid ? '#d4d4d4' : '#FFFFFF'
+                  }"
+                  type="submit"
+                >
+                  Enviar
+                </button>
+              </div>
+              <div>
+                <button
+                  mat-raised-button
+                  routerLink="login"
+                  style="
+                    background-color: #494592;
+                    color: #ffffff;
+                    height: 50px;
+                  "
+                  type="button"
+                  (click)="onVolver()"
+                >
+                  Volver
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
-
-    <div fxLayout="column" fxLayoutAlign="center center" style="width: 100%">
-      <form [formGroup]="form" (ngSubmit)="onEntrar()" style="width: 60%">
-        <div>
-          <mat-form-field style="width: 100%">
-            <mat-label>Nombre</mat-label>
-            <input matInput formControlName="nombre" />
-            <mat-error *ngIf="form.controls['nombre'].hasError('required')">{{
-              getErrorMessage()
-            }}</mat-error>
-          </mat-form-field>
-        </div>
-        <div>
-          <mat-form-field style="width: 100%">
-            <mat-label>Apellidos</mat-label>
-            <input matInput formControlName="apellidos" />
-            <mat-error
-              *ngIf="form.controls['apellidos'].hasError('required')"
-              >{{ getErrorMessage() }}</mat-error
-            >
-          </mat-form-field>
-        </div>
-        <div>
-          <mat-form-field style="width: 100%">
-            <mat-label>Email</mat-label>
-            <input matInput formControlName="email" />
-            <mat-error *ngIf="form.controls['email'].hasError('required')">{{
-              getErrorMessage()
-            }}</mat-error>
-            <mat-error *ngIf="form.controls['email'].hasError('email')">{{
-              getErrorMessageEmail()
-            }}</mat-error>
-          </mat-form-field>
-        </div>
-        <div>
-          <mat-form-field style="width: 100%;">
-            <mat-label>Contraseña</mat-label>
-            <input
-              matInput
-              formControlName="password"
-              [type]="hide ? 'password' : 'text'"
-            />
-            <button
-              mat-icon-button
-              matSuffix
-              (click)="hide = !hide"
-              [attr.aria-label]="'Hide password'"
-              [attr.aria-pressed]="hide"
-              type="button"
-            >
-              <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
-            </button>
-            <mat-error *ngIf="form.controls['password'].hasError('required')">{{
-              getErrorMessage()
-            }}</mat-error>
-          </mat-form-field>
-        </div>
-        <br />
-
-        <!-- Botón Enviar -->
-        <div fxLayout="row" fxLayoutAlign="space-evenly center">
-          <div>
-            <button
-              style="height: 50px"
-              mat-raised-button
-              [disabled]="form.invalid"
-              [ngStyle]="{
-                'background-color': form.invalid
-                  ? 'rgb(183, 183, 183)'
-                  : '#494592',
-                color: form.invalid ? '#d4d4d4' : '#FFFFFF'
-              }"
-              type="submit"
-            >
-              Enviar
-            </button>
-          </div>
-          <div>
-            <button
-              mat-raised-button
-              routerLink="login"
-              style="background-color: #494592; color: #ffffff; height: 50px"
-              type="button"
-              (click)="onVolver()"
-            >
-              Volver
-            </button>
-          </div>
-        </div>
-      </form>
     </div>
   </div>
 </div>
