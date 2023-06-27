@@ -13,6 +13,7 @@ import {
 import { Observable } from 'rxjs';
 import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 import { Administradores } from '../models/administradores.model';
+import { Usuario } from '../models/usuario.model';
 
 @Injectable({
   providedIn: 'root',
@@ -20,33 +21,18 @@ import { Administradores } from '../models/administradores.model';
 export class AuthService {
   constructor(private auth: Auth, private firestore: Firestore) {}
 
-  registro({
-    nombre,
-    apellidos,
-    email,
-    password,
-  }: {
-    nombre: string;
-    apellidos: string;
-    email: string;
-    password: string;
-  }) {
-    const userData = {
-      nombre,
-      apellidos,
-      email,
-      password,
-    };
+  registro(usuario: Usuario) {
+    return createUserWithEmailAndPassword(
+      this.auth,
+      usuario.email,
+      usuario.password
+    ).then((userCredential) => {
+      const user = userCredential.user;
 
-    return createUserWithEmailAndPassword(this.auth, email, password).then(
-      (userCredential) => {
-        const user = userCredential.user;
-
-        return updateProfile(user, {
-          displayName: nombre + ' ' + apellidos,
-        });
-      }
-    );
+      return updateProfile(user, {
+        displayName: usuario.nombre + ' ' + usuario.apellidos,
+      });
+    });
   }
 
   login({ email, password }: { email: string; password: string }) {
@@ -79,6 +65,8 @@ export class AuthService {
 
   getAdministradores(): Observable<Administradores[]> {
     const adminRef = collection(this.firestore, 'administradores');
-    return collectionData(adminRef, {idField: 'id'}) as Observable<Administradores[]>;
+    return collectionData(adminRef, { idField: 'id' }) as Observable<
+      Administradores[]
+    >;
   }
 }

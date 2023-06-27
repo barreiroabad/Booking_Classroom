@@ -10,6 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { Aula } from 'src/app/models/aula.model';
+import { Reservas } from 'src/app/models/reservas.model';
 import { ClasesService } from 'src/app/services/clases.service';
 import { MostrarNavbarService } from 'src/app/services/mostrar-navbar.service';
 
@@ -20,6 +21,7 @@ import { MostrarNavbarService } from 'src/app/services/mostrar-navbar.service';
 })
 export class CrearClaseComponent {
   aulas: Aula[] = [];
+  reservas: Reservas[] = [];
   isUpdating: boolean = false;
   form: FormGroup;
   hide = true;
@@ -102,6 +104,9 @@ export class CrearClaseComponent {
 
   ngOnInit() {
     this.cargarClases();
+    this.clasesServices.getReservas().subscribe((reservas) => {
+      this.reservas = reservas;
+    });
   }
 
   ngAfterViewInit() {
@@ -188,7 +193,8 @@ export class CrearClaseComponent {
 
   borrarClase(aula: Aula) {
     if (confirm('¿Estás seguro de que deseas reservar esta clase?')) {
-      this.clasesServices
+      if (this.compruebaAntesDeBorrar(aula) === false) {
+        this.clasesServices
         .deleteAula(aula)
         .then(() => {
           this.snackBar.open('Clase borrada', '', {
@@ -197,6 +203,13 @@ export class CrearClaseComponent {
           this.cargarClases();
         })
         .catch((error) => console.log(error));
+      }else {
+        this.snackBar.open('No se puede borrar el aula porque existe una reserva', '', {
+          duration: 3000,
+        });
+        return;
+      }
+
     } else {
       return;
     }
@@ -213,6 +226,16 @@ export class CrearClaseComponent {
       'Sábado',
     ];
     return nombresDias[numeroDia];
+  }
+
+  compruebaAntesDeBorrar(aula: Aula): boolean {
+    const aulasReservadas = this.reservas.filter((reserva) => {
+      if(reserva.aula.id === aula.id) {
+        return true;
+      }
+      return false;
+    });
+    return aulasReservadas.length > 0;
   }
 
   compruebaSolapamiento(aula: Aula): boolean {

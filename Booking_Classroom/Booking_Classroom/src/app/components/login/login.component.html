@@ -27,7 +27,7 @@
           >
             <mat-form-field>
               <mat-label>Email</mat-label>
-              <input matInput formControlName="email" />
+              <input matInput formControlName="email" required/>
               <mat-error *ngIf="form.controls['email'].hasError('required')">{{
                 getErrorMessageRequired()
               }}</mat-error>

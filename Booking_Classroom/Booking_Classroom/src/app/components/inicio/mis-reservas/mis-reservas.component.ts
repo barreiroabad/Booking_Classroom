@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
-import { Aula } from 'src/app/models/aula.model';
 import { Reservas } from 'src/app/models/reservas.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { ClasesService } from 'src/app/services/clases.service';
@@ -34,15 +31,15 @@ export class MisReservasComponent implements OnInit {
     private clasesServices: ClasesService,
     private authService: AuthService,
     private snackBar: MatSnackBar,
-    private router: Router,
-    private dialog: MatDialogModule
   ) {
     this.mostrarNavbarService.setMostrarNavBar(true);
+
   }
 
   ngOnInit() {
     this.clasesServices.getReservas().subscribe((reservas) => {
       this.reservas = reservas;
+      this.limpiarReservas();
       this.verAulas();
       //console.log(this.reservas);
     });
@@ -59,7 +56,10 @@ export class MisReservasComponent implements OnInit {
     // Realizar el filtrado de las aulas retorna true si el aula cumple con las condiciones, false en caso contrario
     const reservasFiltradas = this.reservas.filter((reserva) => {
       const emailUsuario = this.authService.getEmailUsuario();
-      if (reserva.email !== emailUsuario) {
+      if (
+        reserva.email !== emailUsuario
+        //|| fechaDeReserva < fechaActualSinHora
+      ) {
         return false;
       }
       return true;
@@ -84,6 +84,23 @@ export class MisReservasComponent implements OnInit {
         .catch((error) => console.log(error));
     } else {
       return;
+    }
+  }
+
+  limpiarReservas() {
+    const fechaActual = new Date();
+    // Obtener valores individuales de día, mes y año
+    const diaActual = fechaActual.getDate();
+    const mesActual = fechaActual.getMonth();
+    const anioActual = fechaActual.getFullYear();
+    const fechaActualSinHora = new Date(anioActual, mesActual, diaActual);
+    for (let i = 0; i < this.reservas.length; i++) {
+      const reserva = this.reservas[i];
+      const fechaDeReserva = new Date(reserva.fecha);
+
+      if (fechaDeReserva < fechaActualSinHora) {
+        this.clasesServices.deleteReserva(reserva);
+      }
     }
   }
 }

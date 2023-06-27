@@ -34,7 +34,7 @@ export class PrincipalComponent implements OnInit {
   compruebaEmail() {
     if (
       this.emailUsuario &&
-      this.emailAdmin.filter((admin) => admin.email === this.emailUsuario)
+      this.emailAdmin.filter((admin) => admin.email.toLocaleLowerCase() === this.emailUsuario.toLocaleLowerCase())
         .length > 0
     ) {
       //incluso si no se encuentra ningún objeto que cumpla la condición en el filter, el resultado del filter será un array vacío, y ese array vacío se evaluará como true en el condicional del if.

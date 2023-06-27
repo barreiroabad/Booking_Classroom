@@ -51,8 +51,8 @@ export class ReservarClaseComponent implements OnInit {
       hora_inicial: [null, Validators.required],
       hora_final: [null, [Validators.required, this.validateHoraFinal]],
       fecha: [0, [Validators.required, this.validatefecha]],
-      ordenadores: [null, Validators.required],
-      proyector: [null, Validators.required],
+      ordenadores: [null],
+      proyector: [null],
     });
 
     // Suscribirse a los cambios de los campos hora_inicial y hora_final
@@ -187,7 +187,18 @@ export class ReservarClaseComponent implements OnInit {
     const aulasDisponiblesFiltradas = this.getAulasDisponibles(
       this.form.controls['fecha'].value.getTime()
     );
-    this.aulasDisponiblesFiltradas = aulasDisponiblesFiltradas;console.log(aulasDisponiblesFiltradas);
+    this.aulasDisponiblesFiltradas = aulasDisponiblesFiltradas;
+    if(this.aulasDisponiblesFiltradas.length === 0) {
+
+      this.mostrarElemento = true;
+      this.snackBar.open(
+        'No hay ningún aula disponible para la fecha indicada',
+        '',
+        {
+          duration: 3000,
+        }
+      );
+    }
     this.form.reset();
   }
 
