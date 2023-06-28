@@ -53,14 +53,14 @@
   background-color: burlywood;
   min-height: 100vh;
   display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .two-content {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  margin-top: 10%;
+  margin-left: 3%;
 }
 
 .login-wrapper {

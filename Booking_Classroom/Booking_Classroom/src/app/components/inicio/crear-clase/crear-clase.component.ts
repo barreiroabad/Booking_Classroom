@@ -192,12 +192,12 @@ export class CrearClaseComponent {
   }
 
   borrarClase(aula: Aula) {
-    if (confirm('¿Estás seguro de que deseas reservar esta clase?')) {
+    if (confirm('¿Estás seguro de que deseas borrar esta aula?')) {
       if (this.compruebaAntesDeBorrar(aula) === false) {
         this.clasesServices
         .deleteAula(aula)
         .then(() => {
-          this.snackBar.open('Clase borrada', '', {
+          this.snackBar.open('Aula borrada', '', {
             duration: 3000,
           });
           this.cargarClases();
